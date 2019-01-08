@@ -1,0 +1,130 @@
+.loginbtn{
+  background-color: rgb(24,188,156) !important;
+}
+.login1-card{
+  transform: scale(1.1) !important;
+  margin:0px !important;
+  position: absolute;
+ top: 28%;
+ left: 22%;
+
+ transform: translate(-50%, -50%);
+}
+.registerInvite{
+  border-left: solid;
+  border-color: #d9d9d9;
+  height: 300px;
+  width: 400px;
+  position: absolute;
+ top: 45%;
+ left: 65%;
+
+ transform: translate(-50%, -50%);
+}
+.registerInviteText{
+  display:flex;
+  flex-direction: column;
+
+padding-left: 55px;
+
+}
+.registerInviteText h5{
+  opacity:0.7;
+  text-align: center;
+
+}
+.registerInviteText li{
+  opacity:0.7;
+ padding-top: 10px;
+ font-family: 'Comfortaa', cursive;
+}
+.registerInviteText p{
+  opacity:0.7;
+  padding-top: 10px;
+  font-family: 'Comfortaa', cursive;
+
+}
+.registernowbtn{
+  margin-top: 15px;
+  transform: scale(0.8);
+  font-weight: bold !important;
+
+}
+.loginnowbtn{
+  margin-top: 15px;
+  transform: scale(0.8);
+  font-weight: bold !important;
+
+}
+.logintitle{
+  text-align: center;
+}
+.loginInviteText h5{
+  opacity:0.7;
+  text-align: center;
+
+}
+.loginInviteText li{
+  opacity:0.7;
+ padding-top: 10px;
+ font-family: 'Comfortaa', cursive;
+}
+.loginInviteText p{
+  opacity:0.7;
+  padding-top: 10px;
+  font-family: 'Comfortaa', cursive;
+
+}
+.loginInvite{
+  border-right: solid;
+  border-color: #d9d9d9;
+  height: 300px;
+  max-width: 450px;
+  position: absolute;
+  top: 45vh;
+  left: 35vw;
+
+ transform: translate(-50%, -50%);
+}
+.loginInviteText{
+  display:flex;
+  flex-direction: column;
+  /* text-align: center; */
+padding-right: 95px;
+padding-top: 20px;
+
+}
+.register-card{
+  transform: scale(0.9) !important;
+
+  position: absolute;
+  width:400px;
+ top: 27vh;
+ left: 55vw;
+ transform: translate(-50%, -50%);
+ margin-left: 40px !important;
+ margin-top: -26px !important;
+}
+
+.username{
+  margin-bottom: 7px !important;
+  height: 47px !important;
+}
+.registerbtn{
+  height:47px !important;
+  font-size: 18px !important;
+}
+.loginMessage{
+  opacity: 0.6 !important;
+  align-self: center !important;
+}
+.loginMessageBottom{
+  align-self: center !important;
+  margin-left: 1.8rem !important
+}
+.registerMessage{
+  color: red;
+}
+.loginMessage{
+  color: red;
+}

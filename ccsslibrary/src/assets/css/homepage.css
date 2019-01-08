@@ -1,0 +1,99 @@
+
+.searchbar{
+  margin-left: 250px;
+  height: 40px !important;
+}
+.searchbtn{
+  margin-right: 150px;
+}
+.searchheader{
+ margin-left: 18%;
+ height: 200px;
+ margin-right: 0px !important;
+ height: 200px;
+ width:83% !important;
+ background-color: rgb(24,188,156);
+ z-index:-1 !important;
+}
+.listItemUl{
+  display: flex;
+  flex-direction: row;
+  margin-left: 46rem !important;
+  margin-top: -5rem !important;
+  list-style: none;
+  padding-bottom: 1rem !important;
+}
+.listItemHeader{
+  color: white !important;
+  padding: 10px !important;
+}
+.listItemHeader:hover {
+    text-decoration: underline;
+}
+.cardMainContainer{
+  width: 89vw;
+  margin-top: -40px;
+  margin-left: 200px;
+}
+.gradeContainer{
+  margin-top: -20px;
+}
+.gradeSection{
+  font-size: 33px;
+}
+.starSign{
+  font-size: 10px
+}
+.cardDiv1{
+  width: 100%;
+}
+.cardDiv2{
+  width: 100%;
+}
+.cardSelf{
+  padding: 3px !important;
+  transform: scale(0.8);
+  border-style: solid;
+  border-width: thin;
+  border-radius: 5%;
+  max-width: 20% !important;
+  color: #808080 !important;
+  border-color:inherit;
+
+}
+.star-dark{
+  border-width: 3px !important;
+  border-color:inherit;
+  opacity: 0.3 !important;
+  font-size: 10px;
+  margin-top: -0.5px !important;
+}
+.cardContainer{
+  margin-top: -48px !important;
+  /* margin-left: 5px !important; */
+   display:
+}
+.portfolio{
+  width:89vw;
+}
+.img-fluid{
+  width: 98.9% !important;
+  height: 200px !important;
+  border-radius: 5%;
+}
+.cardText{
+  align-self: center !important;
+   width: 195px;
+
+
+ }
+.cardTitle{
+
+}
+.cardHr{
+  color: #808080 !important;
+  width : 90%;
+  border-width: 0.6px;
+  border-color:inherit;
+  opacity: 0.6 !important;
+}

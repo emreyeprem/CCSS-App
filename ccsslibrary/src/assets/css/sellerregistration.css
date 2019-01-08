@@ -1,0 +1,23 @@
+.container{
+    padding:5%;
+}
+.container .img{
+    text-align:center;
+}
+.container .details{
+    border-left:3px solid #ded4da;
+}
+.container .details p{
+    font-size:15px;
+    font-weight:bold;
+}
+.photo{
+  margin-left: 16rem !important;
+}
+.searchheader{
+  width: 100% !important;
+  margin-left: -0.5px;
+}
+.containerForm{
+  margin-left: 19.5rem !important;
+}
