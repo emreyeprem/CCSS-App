@@ -34,15 +34,19 @@ class SellerRegistration extends Component{
   }
 
   sendSellerToServer = ()=>{
+    this.props.updateUserType()
     let nickname = this.state.nickname
     let paypalEmail = this.state.paypalEmail
     axios.post('http://localhost:3001/api/sellerregister',{
      nickname : nickname,
      paypalEmail : paypalEmail,
-     usertype : 'seller'
+     usertype : 'seller',
+     userid:this.props.userid
 
     })
   }
+
+
 
 
 
@@ -51,7 +55,7 @@ class SellerRegistration extends Component{
 
     return (
       <div>
-      <header className="masthead bg-primary text-white text-center searchheader" >
+      <header className="masthead bg-primary text-white text-center searchheaderSeller" >
 
 
             <ul className="listItemUl">
@@ -149,7 +153,7 @@ class SellerRegistration extends Component{
 const mapStateToProps = (state) => {
   return {
     //ctr: state.counter // this.props.ctr
-
+    userid:state.userid
   }
 }
 
@@ -157,6 +161,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
+    updateUserType : () => dispatch({type: "UPDATEUSERTYPE"})
 
   }
 }

@@ -5,6 +5,7 @@ const initialState = {
    username:'',
    userType: '',
    userid: '',
+   cartcount: 0,
 }
 
 const reducer = (state = initialState, action) => {
@@ -36,6 +37,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         subjectid: ''
        }
+   } else if(action.type == "UPDATEUSERTYPE"){
+
+       return {
+        ...state,
+        userType: 'seller'
+       } 
    }
  return state
 }

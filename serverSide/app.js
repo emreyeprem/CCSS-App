@@ -56,6 +56,20 @@ app.post('/api/register',function(req,res){
    }
 })
 })
+
+app.post('/api/sellerregister',function(req,res){
+  let nickname = req.body.nickname
+  let paypalEmail = req.body.paypalEmail
+  let usertype = req.body.usertype
+  let userid = req.body.userid
+
+  db.none('UPDATE users SET nickname=$1,paypalemail=$2,usertype=$3 WHERE userid = $4',[nickname,paypalEmail,usertype,userid]).then(()=>{
+  console.log('update is successful')
+  res.json({success:true})
+  })
+
+})
+
 app.post('/api/login',function(req,res){
   let email = req.body.email
   let password = req.body.password
