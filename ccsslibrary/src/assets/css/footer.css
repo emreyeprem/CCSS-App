@@ -1,5 +1,6 @@
 #logoFooter{
-  height:100px;
+  height:100px !important;
+
 }
 footer{
   padding-left:2px !important;
@@ -20,5 +21,4 @@ footer h4{
 .copyright{
   z-index:3 !important;
   position:relative;
-
 }

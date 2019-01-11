@@ -59,8 +59,8 @@ class SellerRegistration extends Component{
 
 
             <ul className="listItemUl">
-              <li className="listItemHeader">Home</li>
-              <li className="listItemHeader">About Us</li>
+            <Link to="/"><li className="listItemHeader">Home</li></Link>
+            <Link to="/aboutus"><li className="listItemHeader">About Us</li></Link>
               <li className="listItemHeader">Help</li>
               <li className="listItemHeader">Schools</li>
               <hr />

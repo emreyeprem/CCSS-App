@@ -4,6 +4,7 @@
 #logo{
   height: 100px;
   margin-left: -10vw;
+  width: 100% !important;
 }
 #dropdown{
 margin-top: 8px;
@@ -25,4 +26,7 @@ margin-right: -46px !important;
 }
 .number{
 
+}
+.headerContainer{
+  height: 50px !important;
 }

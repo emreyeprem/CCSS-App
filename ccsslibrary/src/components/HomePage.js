@@ -5,6 +5,7 @@ import Footer from './Footer'
 import '../assets/css/homepage.css'
 import Filter from './Filter'
 import deskimg from '../assets/img/desk.jpg'
+import {Link, NavLink} from 'react-router-dom'
 
 class HomePage extends Component {
   constructor(props){
@@ -24,8 +25,8 @@ class HomePage extends Component {
 
 
             <ul className="listItemUl">
-              <li className="listItemHeader">Home</li>
-              <li className="listItemHeader">About Us</li>
+              <Link to="/"><li className="listItemHeader">Home</li></Link>
+              <Link to="/aboutus"><li className="listItemHeader">About Us</li></Link>
               <li className="listItemHeader">Help</li>
               <li className="listItemHeader">Schools</li>
               <hr />
