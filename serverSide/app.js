@@ -113,7 +113,10 @@ db.one('insert into sellerproducts (rating,description,grade,subject,standard,ke
     res.json({success:true,productid:response.productid})
   //})
 
-  })
+  }).catch((error)=>{
+  console.log(error)
+  res.json(error)
+})
 
 })
 

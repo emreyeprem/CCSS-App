@@ -36,29 +36,39 @@ class Standardworksheet extends Component{
 
   render(){
       let filteredStandards= this.state.standardsOfGrades.map((each)=>{
-       return <section>
-          <div className="container myproductContainer standardPageCard1">
-              <div className="photo-card standardPageCard2" >
-                  <embed className='pdfDisplay2 photo-background pdfContainer' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed>
-                  <div className="photo-details">
-                      <h1 >{each.title}</h1><hr/>
-                      <p className="textStandard">{each.standard}</p><hr/>
-                      <p className="price capitalize"><span className="capitalize">Grade: </span>{each.grade} <br/> <span>Subject: </span> {each.subject}</p><hr/>
-                      <p className="textStandard capitalize"><span className="textStandard capitalize">Resource Type :</span>{each.resourcetype}</p>
-                  </div>
-                  <div className="photo-tags" >
-                      <ul>
-                      <li className="ratingbtn">Rating</li>
-                      <li className="ratingnumber">{each.rating}</li> <hr/>
-                      <li className="ratingbtnprice">Price</li><br/>
-                      <li className="pricenumber">${each.price}</li>
-                      <li><a className='buttonHover downloadbtn' href={each.fileurl} target="_blank" download>Print File</a></li>
-                      <li><button onClick={this.sendproductid} className='buttonHover detailsbtn' value={each.productid}>See Details</button></li>
-                      </ul>
-                  </div>
-              </div>
-          </div>
-      </section>
+       return <div className="container myproductContainer">
+           <div className="photo-card photoCard" >
+               <embed className='pdfDisplay2 photo-background' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed>
+               <div className="photo-details">
+                   <h6 >{each.title}</h6><hr/>
+                   <p className="price capitalize smallfont textStandard"><span className="capitalize standardspan">Standard: </span>{each.standard}</p><hr/>
+                   <div className="buttonDiv">
+                   <a href='/productwholeinfo' className="detailsAnchor "><button onClick={this.sendproductid} className='detailsbtn addCartbtn' value={each.productid}>Add To Cart</button></a>
+                  <a href='/productwholeinfo' className="detailsAnchor"><button onClick={this.sendproductid} className='buttonHover detailsbtn' value={each.productid}>See Details</button></a>
+                       <a href='/productwholeinfo' className="detailsAnchor"><button onClick={this.sendproductid} className='buttonHover detailsbtn wishbtn' value={each.productid}>Move to Wish List</button></a>
+                       </div>
+               </div>
+
+               <div className="photo-tags giveborder" >
+                   <ul>
+                   <li className="price capitalize"><span className="capitalize">Grade: </span>{each.grade}  <span>Subject: </span> {each.subject}</li><hr/>
+
+                   <li className="price"><span className="capitalize">Resource Type: </span>{each.resourcetype}</li>
+
+
+
+
+                   </ul>
+               </div>
+               <div className="photo-tags ratingDiv" >
+                   <ul>
+                   <li className="price ratingList"><span className="capitalize ratingSpan">Rating: </span><br />{each.rating}</li>
+                   <li className="price priceList pricediv"><span className="capitalize">Price <br/> </span><span className="pricebold">${each.price}</span></li>
+                   </ul>
+               </div>
+           </div>
+
+       </div>
 
 })
 

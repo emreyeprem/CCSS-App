@@ -21,22 +21,25 @@ class Productwholeinfo extends Component{
     }
   }
  componentDidMount =()=>{
+   console.log(this.props.fileurl)
+   this.setState({
+     ...this.state,
+     fileurl:this.props.fileurl
+   })
    axios(`http://localhost:3001/api/${this.props.productid}`).then((response)=>{
        console.log(response.data)
         console.log(response.data.description.toString())
-        this.props.sendFileUrl(response.data.fileurl)
+        //this.props.sendFileUrl(response.data.fileurl)
        this.setState({
          ...this.state,
          product: response.data,
          description: response.data.description
        })
+   }).catch((error)=>{
+     console.log(error)
    })
  }
-componentWillReceiveProps=(props)=>{
-  this.setState({
-    fileurl: props.fileurl
-  })
-}
+
   render(){
 
 
@@ -50,7 +53,7 @@ componentWillReceiveProps=(props)=>{
          <div className="preview col-md-6">
 
            <div className="preview-pic tab-content">
-             <div className="tab-pane active" id="pic-1"><embed className='pdfDisplay' src={this.props.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed></div>
+             <div className="tab-pane active" id="pic-1"><embed className='pdfDisplay' src={this.state.product.fileurl} scroll="no" frameborder="0"></embed></div>
 
            </div>
 
@@ -88,12 +91,12 @@ componentWillReceiveProps=(props)=>{
 
 
 
-<div className="row descriptionCard ">
+<div className="row descriptionCard">
  <div className="col-12">
-            <div className="card border-light mb-3 descriptionField">
+            <div className="descriptionfield card border-light mb-3">
                 <div className="card-header bg-primary text-white text-uppercase"><i className="fa fa-align-justify"></i> Description</div>
-                <div className="card-body ">
-                    <p className="card-text ">
+                <div className="card-body">
+                    <p className="card-text">
                       <MarkdownForReact value={`${this.state.description}`} />
 
                     </p>
@@ -162,7 +165,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
-  sendFileUrl : (fileurl)=> dispatch({type:'FILEURL',fileurl:fileurl})
+  // sendFileUrl : (fileurl)=> dispatch({type:'FILEURL',fileurl:fileurl})
 
   }
 }

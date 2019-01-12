@@ -1,0 +1,110 @@
+.photo-card{
+  height: 250px;
+  width: 1000px;
+  /* background-color: rgb(255,255,255); */
+  background-color: white !important;
+
+}
+.photo-background{
+  height: 240px;
+  width: 200px;
+    background-color: white;
+}
+.photo-details h1{
+  margin-top: -22px;
+  color: black !important;
+}
+.photo-details p{
+width: 320px;
+  color: black !important;
+}
+.photo-tags{
+  width: 200px;
+    background-color: white;
+    margin-left: 20px !important
+}
+.detailsAnchor{
+
+    background-color: white !important;
+
+}
+.photo-details{
+    background-color: white;
+    border-left: solid;
+    border-right: solid;
+    border-width: thin;
+    border-color: #cccccc;
+    width: inherit !important;
+}
+.buttonHover:hover{
+  color:black !important;
+
+}
+.buttonHover{
+    text-transform: capitalize !important;
+    background-color: #18bc9c !important;
+    color:white !important;
+    margin-top: 20px !important;
+}
+.photo-tags li{
+  text-transform: capitalize !important;
+
+}
+.ratingbtn{
+  margin-left:25px !important;
+  margin-top: 20px !important;
+}
+.downloadbtn{
+  margin-left: 26px;
+  margin-top: 50px !important;
+}
+.myproductContainer{
+
+  display: flex;
+    justify-content: center;
+}
+.photo-card{
+  width:100% !important;
+  max-width:900px !important;
+  height:auto;
+  margin-bottom: -90px;
+}
+
+.detailsbtn{
+  width: 110px;
+  margin-right: 15px !important;
+  border-radius: 50px;
+  height: 33px;
+}
+.pdfDisplay2{
+  height: 23rem;
+
+}
+.capitalize{
+  text-transform: capitalize !important;
+}
+.ratingbtnprice{
+  font-size: 20px;
+  margin-left: 30px !important;
+  margin-top: 40px !important;
+}
+.pricenumber{
+  font-size: 25px;
+  font-weight: bold;
+  margin-left: 20px !important;
+  margin-top: -8px !important;
+}
+.ratingbtn{
+  font-size: 20px;
+}
+.ratingnumber{
+  font-size: 15px;
+  font-weight: bold;
+  margin-left: 10px !important;
+}
+.smallfont{
+  font-size: 13px;
+}
+.standardspan{
+  font-size: 17px;
+}

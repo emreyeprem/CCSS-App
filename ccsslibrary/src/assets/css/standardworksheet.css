@@ -9,10 +9,14 @@
 }
 
 .photo-card{
-  height: 250px;
+  height: 250px !important;
   width: 1000px;
+  margin-left: 17rem !important;
+  margin-bottom: 15rem !important;
+  box-shadow: none !important;
   /* background-color: rgb(255,255,255); */
   background-color: white !important;
+  transform: scale(0.9);
 }
 .pdfContainer{
   height: auto !important;
@@ -50,22 +54,26 @@ width: 320px;
 .photo-tags{
   width: 200px;
     background-color: white;
-    margin-left: 20px !important
+    margin-left: 20px !important;
+
+}
+.giveborder{
+  border-width: thin !important;
+  border-right:solid;
+  border-left:solid;
+  width: 150px !important;
+  height: 220px !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  border-color: rgb(230, 230, 230);
 }
 .photo-details{
-    background-color: white;
-    border-left: solid;
-    border-right: solid;
-    border-width: thin;
-    border-color: #cccccc;
+    border-style: none !important;
+    margin-top: -37px !important;
+
 }
-.textStandard{
-  text-overflow: ellipsis !important;
-
-  white-space: nowrap !important;
-  overflow: hidden !important;
-
-
+.photoCard{
+      margin-left: 130px !important;
 }
 .pdfDisplay2{
   height: auto !important;
@@ -85,9 +93,18 @@ width: 320px;
 .ratingbtn{
   margin-left:25px !important;
 }
-.downloadbtn{
-  margin-left: 7px;
+.ratingbtnprice{
+
 }
+.pricenumber{
+
+}
+.pricebox{
+  display: flex;
+}
+/* .downloadbtn{
+  margin-left: 7px;
+} */
 .myproductContainer{
   display: flex;
     justify-content: center;
@@ -103,5 +120,35 @@ width: 320px;
   width: 110px;
   margin-right: 15px !important;
   border-radius: 50px;
-  height: 2rem !important;
+  height: 1.5rem !important;
+  font-size: 14px !important;
+
+}
+.buttonDiv{
+  display:flex;
+  margin-top: -20px !important;
+}
+.wishbtn{
+  width: 160px !important;
+}
+.addCartbtn{
+  background-color: orange !important;
+  text-transform: capitalize !important;
+
+  color:white !important;
+  margin-top: 20px !important;
+}
+.addCartbtn:hover{
+  color:black !important;
+}
+.ratingList{
+  width: 6rem !important;
+}
+.pricediv{
+  margin-top: 30px !important;
+}
+.pricebold{
+  font-weight: bold !important;
+  color:black !important;
+  font-size: 20px !important;
 }

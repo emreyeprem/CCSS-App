@@ -18,6 +18,7 @@ import SellerRegistration from './components/SellerRegistration'
 import Aboutus from './components/Aboutus'
 import ListProduct from './components/ListProduct'
 import Viewcart from './components/Viewcart'
+import MyProducts from './components/MyProducts'
 import Standardworksheet from './components/Standardworksheet'
 import ProductWholeInfo from './components/ProductWholeInfo'
 //import Header from './components/Header'
@@ -37,6 +38,7 @@ ReactDOM.render(<Provider store = {store}>
       <Route path="/standards" component={Standards} />
       <Route path="/viewcart" component={Viewcart} />
       <Route path="/aboutus" component={Aboutus} />
+      <Route path="/myproducts" component={MyProducts} />
       <Route path="/standardworksheet" component={Standardworksheet} />
       <Route path="/productwholeinfo" component={ProductWholeInfo} />
       <Route path="/listproduct" component={ListProduct} />
