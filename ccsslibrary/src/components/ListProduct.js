@@ -197,23 +197,27 @@ fetch('http://localhost:3001/upload', {
         console.log(body)
         this.setState({
           ...this.state,
-          fileURL: `http://localhost:3001/${body.file}` });
+          fileURL: `http://localhost:3001/${body.file}` },()=>{
+            axios.post('http://localhost:3001/api/listproduct',{
+            fileurl:this.state.fileURL,
+            userid: this.props.userid,
+            description: this.props.editorvalue,
+            grade:this.state.grade,
+            subject: this.state.subject,
+            standard: this.state.standard,
+            keywords: this.state.keywords,
+            title: this.state.title,
+            resourcetype:this.state.resourcetype,
+            price: this.state.price
+          }).then((response)=>{
+            console.log(response.data)
+            console.log(response.data.productid)
+            this.props.sendProductIdForWholePage(response.data.productid)
+            this.props.history.push('/productwholeinfo')
+          })
+          });
       });
-    }).then((res)=>{axios.post('http://localhost:3001/api/listproduct',{
-    fileurl:this.state.fileURL,
-    userid: this.props.userid,
-    description: this.props.editorvalue,
-    grade:this.state.grade,
-    subject: this.state.subject,
-    standard: this.state.standard,
-    keywords: this.state.keywords,
-    title: this.state.title,
-    resourcetype:this.state.resourcetype,
-    price: this.state.price
-  }).then((response)=>{
-    console.log(response.data)
-
-  }) })
+    }).then((res)=>{ })
 }
   render() {
   let standards = this.state.standards.map((standard)=>{
@@ -303,18 +307,18 @@ fetch('http://localhost:3001/upload', {
       <div className="resourcecontainer">
         <label className="resourceHeading">Choose Resource Type</label>
         <div className="inputContainer">
-        <input onChange={this.getResourceType} type="radio" name="resource" value="Activities"/>Activities<br/>
-         <input onChange={this.getResourceType} type="radio" name="resource" value="Worksheets"/>Worksheets<br/>
-          <input onChange={this.getResourceType} type="radio" name="resource" value="Assessments"/>Assessments<br/>
-           <input onChange={this.getResourceType} type="radio" name="resource" value="Projects"/>Projects<br/>
-            <input onChange={this.getResourceType} type="radio" name="resource" value="Posters"/>Posters<br/>
+        <input onChange={this.getResourceType} type="radio" name="resource" value="Activity"/>Activities<br/>
+         <input onChange={this.getResourceType} type="radio" name="resource" value="Worksheet"/>Worksheets<br/>
+          <input onChange={this.getResourceType} type="radio" name="resource" value="Assessment"/>Assessments<br/>
+           <input onChange={this.getResourceType} type="radio" name="resource" value="Project"/>Projects<br/>
+            <input onChange={this.getResourceType} type="radio" name="resource" value="Poster"/>Posters<br/>
             </div>
 
             <label className="resourceHeading2">Price</label>
 
            <input onChange={this.getPrice} className="priceInput" type="text" placeholder="&nbsp;&nbsp;$ &nbsp;&nbsp;0" />
 
-           <button onClick={this.sendItem} type="button" className="btn btn-primary btn-lg itemSubmitBtn">Publish Item</button>
+          <button onClick={this.sendItem} type="button" className="btn btn-primary btn-lg itemSubmitBtn">Publish Item</button>
 
 
       </div>
@@ -345,7 +349,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
-// getGradeSubjectId : (value) => dispatch({type: "SUBJECTID",subjectid: value})
+sendProductIdForWholePage : (value) => dispatch({type: "PRODUCTID",productid: value})
 
   }
 }

@@ -18,7 +18,8 @@ import SellerRegistration from './components/SellerRegistration'
 import Aboutus from './components/Aboutus'
 import ListProduct from './components/ListProduct'
 import Viewcart from './components/Viewcart'
-import Productwholeinfo from './components/Productwholeinfo'
+import Standardworksheet from './components/Standardworksheet'
+import ProductWholeInfo from './components/ProductWholeInfo'
 //import Header from './components/Header'
 import {persistor, store} from './store/configureStore'
 
@@ -36,7 +37,8 @@ ReactDOM.render(<Provider store = {store}>
       <Route path="/standards" component={Standards} />
       <Route path="/viewcart" component={Viewcart} />
       <Route path="/aboutus" component={Aboutus} />
-      <Route path="/productwholeinfo" component={Productwholeinfo} />
+      <Route path="/standardworksheet" component={Standardworksheet} />
+      <Route path="/productwholeinfo" component={ProductWholeInfo} />
       <Route path="/listproduct" component={ListProduct} />
       <Route path="/sellerregistration" component={SellerRegistration} />
 

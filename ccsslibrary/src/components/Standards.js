@@ -67,14 +67,19 @@ componentWillReceiveProps = (props)=>{
   })
 }
 }
+getFilterValue =(e)=>{
+  console.log(e.target.value)
+  this.props.sendFilterValue(e.target.value)
+}
 
-  render(){
-    let orderedStandards=this.state.standards.map((each)=>{
-      return <Link className="hover1" to='/'><li>{each}</li></Link>
-    })
-    return (
-      <div>
-      <header className="masthead bg-primary text-white text-center searchheader" >
+
+     render(){
+       let orderedStandards=this.state.standards.map((each)=>{
+          return <li><Link to='/standardworksheet'><input type="submit" onClick={this.getFilterValue} value={each}/></Link></li>
+              })
+          return (
+            <div>
+            <header className="masthead bg-primary text-white text-center searchheader" >
 
 
             <ul className="listItemUl">
@@ -96,13 +101,17 @@ componentWillReceiveProps = (props)=>{
           </div>
       </header>
          <div className="main-container">
-         <div className="filterStandard-container">
+           <div className="filterStandard-container">
+
         <Filter/>
-          </div>
+
+           </div>
           <div className="standard-container">
-        <ul >
+
+      <ul >
         {orderedStandards}
-        </ul>
+      </ul>
+
          </div>
 
 </div>
@@ -125,7 +134,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
-resumeSubjectId : (value) => dispatch({type: "RESUMESUBJECTID"})
+resumeSubjectId : (value) => dispatch({type: "RESUMESUBJECTID"}),
+sendFilterValue : (value) => dispatch({type: "STANDARDVALUE", value: value})
   }
 }
 
