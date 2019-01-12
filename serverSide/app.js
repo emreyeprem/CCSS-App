@@ -120,7 +120,7 @@ db.one('insert into sellerproducts (rating,description,grade,subject,standard,ke
 
 app.post('/api/filterbystandard',function(req,res){
     let worksheetstandard = req.body.worksheetstandard
-    db.any('select u.nickname,u.userid,s.rating,s.description,s.grade,s.subject,s.title,s.price,s.fileurl,s.standard from users u LEFT JOIN sellerproducts s on u.userid = s.userid where s.standard = $1',[worksheetstandard]).then((response)=>{
+    db.any('select u.nickname,u.userid,s.rating,s.description,s.grade,s.resourcetype,s.subject,s.title,s.price,s.fileurl,s.standard from users u LEFT JOIN sellerproducts s on u.userid = s.userid where s.standard = $1',[worksheetstandard]).then((response)=>{
           res.json(response)
       }).catch((error)=>{
           console.log(error)

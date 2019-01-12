@@ -15,8 +15,8 @@ class Standardworksheet extends Component{
     super(props)
     this.state={
 
-      worksheetstandard : ''
-
+      worksheetstandard : '',
+      standardsOfGrades: []
 
     }
   }
@@ -26,13 +26,41 @@ class Standardworksheet extends Component{
      worksheetstandard: this.props.filteredstandard
   }).then((response)=>{
     console.log(response.data)
-
+    this.setState({
+      ...this.state,
+      standardsOfGrades : response.data
+    })
   })
 }
 
 
   render(){
+      let filteredStandards= this.state.standardsOfGrades.map((each)=>{
+       return <section>
+          <div className="container myproductContainer standardPageCard1">
+              <div className="photo-card standardPageCard2" >
+                  <embed className='pdfDisplay2 photo-background pdfContainer' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed>
+                  <div className="photo-details">
+                      <h1 >{each.title}</h1><hr/>
+                      <p className="textStandard">{each.standard}</p><hr/>
+                      <p className="price capitalize"><span className="capitalize">Grade: </span>{each.grade} <br/> <span>Subject: </span> {each.subject}</p><hr/>
+                      <p className="textStandard capitalize"><span className="textStandard capitalize">Resource Type :</span>{each.resourcetype}</p>
+                  </div>
+                  <div className="photo-tags" >
+                      <ul>
+                      <li className="ratingbtn">Rating</li>
+                      <li className="ratingnumber">{each.rating}</li> <hr/>
+                      <li className="ratingbtnprice">Price</li><br/>
+                      <li className="pricenumber">${each.price}</li>
+                      <li><a className='buttonHover downloadbtn' href={each.fileurl} target="_blank" download>Print File</a></li>
+                      <li><button onClick={this.sendproductid} className='buttonHover detailsbtn' value={each.productid}>See Details</button></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </section>
 
+})
 
     return (
       <div>
@@ -58,37 +86,10 @@ class Standardworksheet extends Component{
           </div>
       </header>
 
-         <Filter />
+           <Filter />
 
 
-      <section>
-
-         <div className="container myproductContainer standardPageCard1">
-             <div className="photo-card standardPageCard2" >
-                 <embed className='pdfDisplay photo-background pdfContainer' src="" scroll="no" seamless="seamless" frameborder="0"></embed>
-                 <div className="photo-details">
-                     <h1 >Title</h1><hr/>
-                     <p >Standard</p><hr/>
-                     <p >Grade/Subject</p><hr/>
-                     <p >Resource Type</p>
-                 </div>
-                 <div className="photo-tags" >
-                     <ul>
-                     <li className="ratingbtn">Rating:</li>
-                     <li className="ratingbtn">Price:</li>
-                         <li><a className='buttonHover detailsbtn' href="#">See Details</a></li>
-                         <li><a className='buttonHover downloadbtn' href="#" download>Download</a></li>
-                     </ul>
-                 </div>
-
-             </div>
-         </div>
-     </section>
-
-
-
-
-
+      {filteredStandards}
 
 
    <Footer />

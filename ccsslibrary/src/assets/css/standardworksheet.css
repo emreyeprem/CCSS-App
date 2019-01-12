@@ -21,13 +21,16 @@
   margin-left: 15rem !important;
   margin-top: -4rem !important;
   border-width: medium !important;
-  /* border-style: dotted !important; */
+
 }
 .standardPageCard2{
   margin-left: 8rem !important;
   margin-top: -4rem !important;
   border-width: medium !important;
   border-style: ridge !important;
+  height: 371.5px !important;
+  transform: scale(0.85) !important;
+  font-size: 1vw !important;
 }
 .photo-background{
   height: 240px;
@@ -55,6 +58,17 @@ width: 320px;
     border-right: solid;
     border-width: thin;
     border-color: #cccccc;
+}
+.textStandard{
+  text-overflow: ellipsis !important;
+
+  white-space: nowrap !important;
+  overflow: hidden !important;
+
+
+}
+.pdfDisplay2{
+  height: auto !important;
 }
 .buttonHover:hover{
   color:black !important;
@@ -88,4 +102,6 @@ width: 320px;
 .detailsbtn{
   width: 110px;
   margin-right: 15px !important;
+  border-radius: 50px;
+  height: 2rem !important;
 }
