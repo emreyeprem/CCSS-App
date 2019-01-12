@@ -186,7 +186,12 @@ getPrice = (e)=>{
   })
 }
 deletefile=()=>{
-// console.log(this.refs.fileInput)
+ this.setState({
+   ...this.state,
+   files: '',
+   preview: '',
+   className: ''
+ })
 }
 sendItem=()=>{
   var data = new FormData();
@@ -232,15 +237,17 @@ fetch('http://localhost:3001/upload', {
   let standards = this.state.standards.map((standard)=>{
     return <option value={standard}>{standard}</option>
   })
+  let thumbs=''
   const {files} = this.state;
-  const thumbs = files.map(file => (
+  if(files){
+  thumbs = files.map(file => (
     <div style={thumb} key={file.name}>
       <div style={thumbInner}>
 
         <embed className="embed" src={file.preview} style={img}/>
       </div>
     </div>
-  ));
+  )) };
     return(
       <div>
       <div className="listproductContainer">

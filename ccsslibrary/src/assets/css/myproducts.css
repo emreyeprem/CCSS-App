@@ -18,6 +18,13 @@
 width: 320px;
   color: black !important;
 }
+.photoInfoDiv{
+  height: 16rem !important;
+  margin-top: -10px !important;
+}
+.productTitle{
+  margin-top: -15px !important;
+}
 .photo-tags{
   width: 200px;
     background-color: white;

@@ -39,13 +39,13 @@ class Standardworksheet extends Component{
        return <div className="container myproductContainer">
            <div className="photo-card photoCard" >
                <embed className='pdfDisplay2 photo-background' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed>
-               <div className="photo-details">
+               <div className="photo-details borderRight">
                    <h6 >{each.title}</h6><hr/>
                    <p className="price capitalize smallfont textStandard"><span className="capitalize standardspan">Standard: </span>{each.standard}</p><hr/>
                    <div className="buttonDiv">
-                   <a href='/productwholeinfo' className="detailsAnchor "><button onClick={this.sendproductid} className='detailsbtn addCartbtn' value={each.productid}>Add To Cart</button></a>
-                  <a href='/productwholeinfo' className="detailsAnchor"><button onClick={this.sendproductid} className='buttonHover detailsbtn' value={each.productid}>See Details</button></a>
-                       <a href='/productwholeinfo' className="detailsAnchor"><button onClick={this.sendproductid} className='buttonHover detailsbtn wishbtn' value={each.productid}>Move to Wish List</button></a>
+                   <a href='/productwholeinfo' className="detailsAnchor "><button onClick={this.sendproductid} className='detailsbtn addCartbtn detailsbutton' value={each.productid}>Add To Cart</button></a>
+                  <a href='/productwholeinfo' className="detailsAnchor"><button onClick={this.sendproductid} className='buttonHover detailsbtn detailsbutton' value={each.productid}>See Details</button></a>
+                       <a href='/productwholeinfo' className="detailsAnchor"><button onClick={this.sendproductid} className='buttonHover detailsbtn wishbtn detailsbutton' value={each.productid}>Move to Wish List</button></a>
                        </div>
                </div>
 

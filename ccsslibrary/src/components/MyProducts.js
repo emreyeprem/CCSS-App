@@ -17,6 +17,7 @@ componentDidMount=()=>{
   axios.post('http://localhost:3001/api/getmyproducts',{
     userid: this.props.userid
   }).then((response)=>{
+    console.log(response)
     this.setState({
       ...this.state,
       items: response.data
@@ -33,8 +34,8 @@ sendproductid=(e)=>{
        return <div className="container myproductContainer">
            <div className="photo-card" >
                <embed className='pdfDisplay2 photo-background' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed>
-               <div className="photo-details">
-                   <h1 >{each.title}</h1><hr/>
+               <div className="photo-details photoInfoDiv">
+                   <h1 className="productTitle">{each.title}</h1><hr/>
                    <p className="price capitalize smallfont"><span className="capitalize standardspan">Standard: </span>{each.standard}</p><hr/>
                    <p className="price capitalize"><span className="capitalize">Grade: </span>{each.grade} / <span>Subject: </span> {each.subject}</p><hr/>
 

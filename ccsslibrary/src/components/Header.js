@@ -29,7 +29,7 @@ class Header extends Component{
             withRegularUser = <div className="cartWrapper"><div className="dropdown-menu userDropdown" role="menu"><Link to="/sellerregistration" className="dropdown-item">Become a seller</Link><Link to="/sellerpurchases" className="dropdown-item">My Purchases</Link><Link to="/sellerwishlist" className="dropdown-item">My Wish List</Link><Link to="/" onClick={this.logout} className="dropdown-item" role="presentation" href="#">Logout</Link></div><span className="fa-stack fa-x has-badge cartImg" data-count=""><Link to=''><i className="fa fa-shopping-cart number">{this.props.cartcount}</i></Link>
             </span></div>
           } else {
-            withSellerUser = <div className="cartWrapper"><div className="dropdown-menu userDropdown" role="menu"><Link to="/listproduct" className="dropdown-item">List a product</Link><Link to="/sellerregistration" className="dropdown-item">My products</Link><Link to="/sellerpurchases" className="dropdown-item">My Purchases</Link><Link to="/sellerwishlist" className="dropdown-item">My Wish List</Link><Link to="/" onClick={this.logout} className="dropdown-item" role="presentation" href="#">Logout</Link></div><span className="fa-stack fa-x has-badge cartImg" data-count=""><Link to=''><i className="fa fa-shopping-cart number">{this.props.cartcount}</i></Link>
+            withSellerUser = <div className="cartWrapper"><div className="dropdown-menu userDropdown" role="menu"><Link to="/listproduct" className="dropdown-item">List a product</Link><Link to="/myproducts" className="dropdown-item">My products</Link><Link to="/sellerpurchases" className="dropdown-item">My Purchases</Link><Link to="/sellerwishlist" className="dropdown-item">My Wish List</Link><Link to="/" onClick={this.logout} className="dropdown-item" role="presentation" href="#">Logout</Link></div><span className="fa-stack fa-x has-badge cartImg" data-count=""><Link to=''><i className="fa fa-shopping-cart number">{this.props.cartcount}</i></Link>
             </span></div>
           }
           if(!this.props.token==''){
@@ -46,7 +46,7 @@ class Header extends Component{
 
 
      <nav className="navbar navbar-light navbar-expand-lg fixed-top bg-secondary text-uppercase" id="mainNav">
-         <div className="container headerContainer"><Link to="/" className="navbar-brand js-scroll-trigger"><img id="logo" src={ccsslogo}/></Link><button className="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" data-toggle="collapse"
+         <div className="container headercontainer"><Link to="/" className="navbar-brand js-scroll-trigger"><img id="logo" src={ccsslogo}/></Link><button className="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" data-toggle="collapse"
                  data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i className="fa fa-bars"></i></button>
              <div className="collapse navbar-collapse" id="navbarResponsive">
                  <ul className="nav navbar-nav ml-auto">

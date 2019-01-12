@@ -116,8 +116,7 @@ db.one('insert into sellerproducts (rating,description,grade,subject,standard,ke
   }).catch((error)=>{
   console.log(error)
   res.json(error)
-})
-
+  })
 })
 
 
@@ -165,5 +164,13 @@ app.get('/api/:productid',function(req,res){
   let productid = req.params.productid
   db.one('select * from sellerproducts where productid=$1',[productid]).then((response)=>{
     res.json(response)
+  })
+})
+
+app.post('/api/getmyproducts',function(req,res){
+  let userid= req.body.userid
+  db.any('select * from sellerproducts where userid=$1',[userid]).then((response)=>{
+    res.json(response)
+    console.log(response)
   })
 })
