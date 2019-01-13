@@ -40,3 +40,6 @@
   display: flex !important;
   flex-direction: row !important;
 }
+.itemMainCard{
+  height:auto !important;
+}

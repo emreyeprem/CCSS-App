@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {Link, NavLink} from 'react-router-dom'
 import Menu, { SubMenu, Item as MenuItem, Divider } from 'rc-menu';
-
+import history from '../history'
 import 'rc-menu/assets/index.css';
 import axios from 'axios'
 import '../assets/css/filter.css'
@@ -21,7 +21,9 @@ class Filter extends Component{
   constructor(props){
     super(props)
     this.state={
-           grade: ''
+      grade: '',
+      resourcetype: '',
+      price: ''
     }
   }
 
@@ -40,6 +42,24 @@ getStandards = (e)=>{
     this.props.getGradeSubjectId(chosenStandard[0].id)
   })
 }
+
+filterByPrice = (e)=>{
+  if(e.target.checked ==true){
+     console.log(e.target.value)
+     this.props.sendFilterValue(e.target.value)
+    history.push('/standardworksheet')
+  }
+
+}
+
+filterByResource = (e)=>{
+  if(e.target.checked ==true){
+  this.props.sendFilterValue(e.target.value)
+  history.push('/standardworksheet')
+  }
+}
+
+
 
   render(){
 
@@ -111,11 +131,11 @@ getStandards = (e)=>{
        <p className="search-by-price">Search by Price</p>
        <div className="adjustment">
        <div className="price-container">
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">Free</label><br/>
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">Under $5</label><br/>
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">$5 - $10</label><br/>
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">$10 - $20</label><br/>
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">$20 and up</label>
+        <input onChange={this.filterByPrice} className="priceLevel" type="radio" name="price" value="Free"/><label className="priceLabel">Free</label><br/>
+        <input onChange={this.filterByPrice} className="priceLevel" type="radio" name="price" value="Under $5"/><label className="priceLabel">Under $5</label><br/>
+        <input onChange={this.filterByPrice} className="priceLevel" type="radio" name="price" value="$5 - $10"/><label className="priceLabel">$5 - $10</label><br/>
+        <input onChange={this.filterByPrice} className="priceLevel" type="radio" name="price" value="$10 - $20"/><label className="priceLabel">$10 - $20</label><br/>
+        <input onChange={this.filterByPrice} className="priceLevel" type="radio" name="price" value="$20 and up"/><label className="priceLabel">$20 and up</label>
        </div>
 
        </div>
@@ -125,11 +145,11 @@ getStandards = (e)=>{
        <p className="search-by-resource">Top Resource Types</p>
        <div className="adjustment">
        <div className="price-container">
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">Activities</label><br/>
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">Worksheets</label><br/>
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">Assessments</label><br/>
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">Projects</label><br/>
-        <input className="priceLevel" type="checkbox"/><label className="priceLabel">Posters</label>
+        <input onChange={this.filterByResource} className="priceLevel" type="radio" name="resourcetype" value="Activity"/><label className="priceLabel">Activities</label><br/>
+        <input onChange={this.filterByResource} className="priceLevel" type="radio" name="resourcetype" value="Worksheet"/><label className="priceLabel">Worksheets</label><br/>
+        <input onChange={this.filterByResource} className="priceLevel" type="radio" name="resourcetype" value="Assessment"/><label className="priceLabel">Assessments</label><br/>
+        <input onChange={this.filterByResource} className="priceLevel" type="radio" name="resourcetype" value="Project"/><label className="priceLabel">Projects</label><br/>
+        <input onChange={this.filterByResource} className="priceLevel" type="radio" name="resourcetype" value="Poster"/><label className="priceLabel">Posters</label>
        </div>
        <div id="adjustment2">
        </div>
@@ -159,7 +179,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
-getGradeSubjectId : (value) => dispatch({type: "SUBJECTID",subjectid: value})
+getGradeSubjectId : (value) => dispatch({type: "SUBJECTID",subjectid: value}),
+sendFilterValue : (value) => dispatch({type: "STANDARDVALUE", value: value})
   }
 }
 

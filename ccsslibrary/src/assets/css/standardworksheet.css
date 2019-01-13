@@ -1,4 +1,3 @@
-
 .searchHeaderStandard{
   margin-left: 10rem !important;
   height: 5rem !important;
@@ -59,6 +58,8 @@ width: 320px;
 }
 .borderRight{
   border-right: solid !important;
+  border-style: none !important;
+  margin-top: -37px !important;
 }
 .giveborder{
   border-width: thin !important;
@@ -70,11 +71,7 @@ width: 320px;
   padding-right: 2rem !important;
   border-color: rgb(230, 230, 230);
 }
-.photo-details{
-    border-style: none !important;
-    margin-top: -37px !important;
 
-}
 .photoCard{
       margin-left: 130px !important;
 }

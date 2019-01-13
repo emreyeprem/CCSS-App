@@ -59,7 +59,8 @@ const reducer = (state = initialState, action) => {
 
           return {
             ...state,
-           filteredstandard: action.value
+           filtereditem: action.value,
+           
           }
     }else if(action.type == "PRODUCTID"){
 

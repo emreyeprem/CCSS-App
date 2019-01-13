@@ -113,26 +113,13 @@ db.one('insert into sellerproducts (rating,description,grade,subject,standard,ke
     res.json({success:true,productid:response.productid})
   //})
 
-  }).catch((error)=>{
+}).catch((error)=>{
   console.log(error)
   res.json(error)
-  })
 })
 
 
-app.post('/api/filterbystandard',function(req,res){
-    let worksheetstandard = req.body.worksheetstandard
-    db.any('select u.nickname,u.userid,s.rating,s.description,s.grade,s.resourcetype,s.subject,s.title,s.price,s.fileurl,s.standard from users u LEFT JOIN sellerproducts s on u.userid = s.userid where s.standard = $1',[worksheetstandard]).then((response)=>{
-          res.json(response)
-      }).catch((error)=>{
-          console.log(error)
-          res.json(error)
-    })
 })
-
-
-
-
 //--------to generate random unique id for pdf files--------------
 function guid() {
   return "ss-s-s-s-sss".replace(/s/g, s4);
@@ -166,11 +153,118 @@ app.get('/api/:productid',function(req,res){
     res.json(response)
   })
 })
-
 app.post('/api/getmyproducts',function(req,res){
   let userid= req.body.userid
   db.any('select * from sellerproducts where userid=$1',[userid]).then((response)=>{
     res.json(response)
-    console.log(response)
   })
+})
+
+app.post('/api/sendtomycart',function(req,res){
+  let userid = req.body.userid
+  let productid = req.body.productid
+  let cartcount = req.body.cartcount
+  let count = parseInt(cartcount)+1
+  console.log(count)
+  let status='await'
+  db.none('insert into buyerproducts (userid,productid,status) values ($1,$2,$3)',[userid,productid,status]).then(()=>{
+    db.one('update users set cartcount=$1 where userid=$2 returning cartcount',[count,userid]).then((count)=>{
+      console.log(count)
+      res.json({success:true,cartcount:count})
+    })
+  })
+
+})
+app.post('/api/getcartitems',function(req,res){
+  let userid=req.body.userid
+
+  db.any('select * from buyerproducts b left join sellerproducts s on b.productid=s.productid left join users u on u.userid=s.userid where b.userid=$1 and status=$2',[userid,'await']).then((response)=>{
+    let prices = response.map((each)=>{
+      return parseInt(each.price)
+    })
+    let total = prices.reduce((a,b)=>a+b,0)
+
+    res.json({response:response,total:total})
+  })
+})
+app.post('/api/deleteitem',function(req,res){
+  let id=req.body.id
+  let cartcount= req.body.cartcount
+  let userid= req.body.userid
+  db.none('delete from buyerproducts where id=$1',[id]).then(()=>{
+    let count1 = parseInt(cartcount)-1
+    db.one('update users set cartcount=$1 where userid=$2 returning cartcount',[count1,userid]).then((count2)=>{
+
+
+      console.log(count2.cartcount)
+      res.json({success:true,cartcount:count2.cartcount})
+    })
+  })
+})
+app.post('/api/filterby',function(req,res){
+    let filtereditem = req.body.filtereditem
+    console.log(filtereditem)
+    db.any('select * from sellerproducts').then((response)=>{
+      if( filtereditem=='Free'){
+        console.log('free kisim')
+        let freeItems= response.filter((each)=>{
+          return each.price=='0'
+        })
+      res.json(freeItems)
+    } else if(filtereditem == 'Under $5'){
+      console.log('under 5 kisim')
+        let lessThanFiveDollarItems= response.filter((each)=>{
+          return parseInt(each.price) < 4.99
+        })
+        console.log(lessThanFiveDollarItems)
+        res.json(lessThanFiveDollarItems)
+    } else if(filtereditem == '$5 - $10'){
+        let fiveToTenDollarItems= response.filter((each)=>{
+          return parseInt(each.price) > 4.99 && parseInt(each.price) < 9.99
+        })
+        res.json(fiveToTenDollarItems)
+    } else if(filtereditem == '$10 - $20'){
+        let tenToTwentyDollarItems= response.filter((each)=>{
+          return parseInt(each.price) > 9.99 && parseInt(each.price) < 19.99
+        })
+        res.json(tenToTwentyDollarItems)
+    } else if(filtereditem == '$20 and up'){
+        let moreThanTwentyDollarItems= response.filter((each)=>{
+          return parseInt(each.price) > 19.99
+        })
+        res.json(moreThanTwentyDollarItems)
+    } else if(filtereditem=='Assessment'){
+      let assessment= response.filter((each)=>{
+        return each.resourcetype=='Assessment'
+      })
+      res.json(assessment)
+    } else if(filtereditem=='Activity'){
+      let activity= response.filter((each)=>{
+        return each.resourcetype=='Activity'
+      })
+      res.json(activity)
+    } else if(filtereditem=='Worksheet'){
+      let worksheet= response.filter((each)=>{
+        return each.resourcetype=='Worksheet'
+      })
+      res.json(worksheet)
+    } else if(filtereditem=='Project'){
+      let project= response.filter((each)=>{
+        return each.resourcetype=='Project'
+      })
+      res.json(project)
+    } else if(filtereditem=='Poster'){
+      let poster= response.filter((each)=>{
+        return each.resourcetype=='Poster'
+      })
+      res.json(poster)
+    } else{
+    db.any('select u.nickname,u.userid,s.productid,s.rating,s.description,s.grade,s.resourcetype,s.subject,s.title,s.price,s.fileurl,s.standard from users u LEFT JOIN sellerproducts s on u.userid = s.userid where s.standard = $1',[filtereditem]).then((response)=>{
+          res.json(response)
+      }).catch((error)=>{
+          console.log(error)
+          res.json(error)
+    })
+  }
+})
 })

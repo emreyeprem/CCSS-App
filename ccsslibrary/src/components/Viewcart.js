@@ -4,63 +4,97 @@ import { withRouter } from 'react-router-dom'
 import {Link, NavLink} from 'react-router-dom'
 import '../assets/css/viewcart.css'
 import Footer from './Footer'
+import axios from 'axios'
 
 
 
-class Aboutus extends Component{
+class Viewcart extends Component{
   constructor(props){
     super(props)
     this.state={
-
+     items:[],
+     total: 0
     }
   }
-
-
+componentDidMount=()=>{
+   axios.post('http://localhost:3001/api/getcartitems',{
+     userid:this.props.userid
+   }).then((response)=>{
+     console.log(response.data)
+     this.setState({
+       ...this.state,
+       items:response.data.response,
+       total: response.data.total
+     })
+   })
+}
+deleteItem=(e)=>{
+  axios.post('http://localhost:3001/api/deleteitem',{
+    id: e.target.value,
+    cartcount: this.props.cartcount,
+    userid: this.props.userid
+  }).then((response)=>{
+    console.log(response.data.cartcount)
+    axios.post('http://localhost:3001/api/getcartitems',{
+      userid:this.props.userid
+    }).then((response)=>{
+      console.log(response.data)
+      this.setState({
+        ...this.state,
+        items:response.data.response,
+        total: response.data.total
+      })
+    })
+    this.props.updatecartcount(response.data.cartcount)
+  })
+}
   render(){
 
+  let cartItems = this.state.items.map((each)=>{
+      return  <div className="col-md-12">
+              <div className="card mb-1 itemMainCard">
+                  <div className="card-body cardMainDiv">
+                      <div className="row">
+                        {this.state.result}
+                      <div className="col-md-3 imageContainer">
 
+                          <embed className="imgViewCard" src={each.fileurl}/>
+                          <p className="card-text"><small className="text-muted">Created by {each.username} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br/>{each.nickname}</small></p>
+                      </div>
+                      <div className="col-md-6 border-right">
+                          <h5 className="text-danger">{each.title}</h5>
+                          <a href="#" className="badge badge-secondary">Move to Wish List &nbsp; &#10084;</a>
+                          <p className="card-text">{each.standard}</p>
+
+
+                      </div>
+                      <div className="col-md-3">
+                          <div className="itemPriceDiv"><h5>Price :</h5>&nbsp;<span>$</span><span>{each.price}</span></div>
+                          <small>Ratings</small><br/>
+                          <div className="starBox">{each.rating}
+                          </div>
+
+                        <button onClick={this.deleteItem} type="button" className="btn btn-warning rounded-1 mb-1 btnRemove" value={each.id}>&#128465;&nbsp;Remove</button>
+                       <Link to="/"><button type="button" className="btn btn-success rounded-1 mb-1 btnBack">&#8617;Continue Searching</button></Link>
+
+
+                      </div>
+                  </div>
+                  </div>
+              </div>
+
+
+
+          </div>
+  })
     return (
         <div>
-
-
-
-
         <div className="container">
 <div className="row">
   <div className="col-md-9">
       <div className="row">
-                          <div className="col-md-12">
-                              <div className="card mb-1 itemMainCard">
-                                  <div className="card-body cardMainDiv">
-                                      <div className="row">
-                                      <div className="col-md-3 imageContainer">
-                                          <img className="imgViewCard" src="https://ecdn.teacherspayteachers.com/thumbitem/Solving-Inequalities-Coloring-Activity-2732130-1543848132/original-2732130-2.jpg" />
-                                          <p className="card-text"><small className="text-muted">By John Doe &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Everything for Algebra</small></p>
-                                      </div>
-                                      <div className="col-md-6 border-right">
-                                          <h5 className="text-danger">Solving Inequalities by Adition & Subtraction </h5>
-                                          <a href="#" className="badge badge-secondary">Move to Wish List &nbsp; &#10084;</a>
-                                          <p className="card-text">Many simple inequalities can be solved by adding, subtracting, multiplying or dividing both sides until you are left with the variable on its own.</p>
-                                          <p className="card-text"><small className="text-muted">&#9776;&#124;&nbsp;Digital Download</small></p>
 
-                                      </div>
-                                      <div className="col-md-3">
-                                          <div className="itemPriceDiv"><h5>Price :</h5>&nbsp;<span>$</span><span>26.5</span></div>
-                                          <div className="starBox"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i>
-                                          <small>Ratings</small></div>
-                                          <div className="quantityBox"><p>Quantity:</p><input type="number" className="form-control itemQuantity"  value="1"/></div>
-                                        <button type="button" className="btn btn-warning rounded-1 mb-1 btnRemove">&#128465;&nbsp;Remove</button>
-                                       <button type="button" className="btn btn-success rounded-1 mb-1 btnBack">&#8617;Back</button>
-
-
-                                      </div>
-                                  </div>
-                                  </div>
-                              </div>
-
-
-
-                          </div>
+      {cartItems}
                       </div>
                   </div>
 
@@ -77,11 +111,11 @@ class Aboutus extends Component{
                          <div className="panel-body">
                              <div className="col-md-12">
                                  <strong>Subtotal (# item)</strong>
-                                 <div className="pull-right"><span>$</span><span>26.5</span></div>
+                                 <div className="pull-right"><span>$</span><span>{this.state.total}</span></div>
                              </div>
                              <div className="col-md-12">
                                  <strong>Tax</strong>
-                                 <div className="pull-right"><span>$</span><span>1.85</span></div>
+                                 <div className="pull-right"><span>$</span><span>0.00</span></div>
                              </div>
                              <div className="col-md-12">
                                  <small>Shipping</small>
@@ -90,7 +124,7 @@ class Aboutus extends Component{
                              </div>
                              <div className="col-md-12">
                                  <strong>Order Total</strong>
-                                 <div className="pull-right"><span>$</span><span>28.35</span></div>
+                                 <div className="pull-right"><span>$</span><span>{this.state.total}</span></div>
                                  <hr/>
                              </div>
 
@@ -127,7 +161,8 @@ class Aboutus extends Component{
 const mapStateToProps = (state) => {
   return {
     //ctr: state.counter // this.props.ctr
-    // userid:state.userid
+    userid:state.userid,
+    cartcount: state.cartcount
   }
 }
 
@@ -136,9 +171,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
     // updateUserType : () => dispatch({type: "UPDATEUSERTYPE"})
-
+    updatecartcount : (cartcount) => dispatch({type: "UPDATECARTCOUNT",cartcount:cartcount})
   }
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Aboutus)
+export default connect(mapStateToProps,mapDispatchToProps)(Viewcart)

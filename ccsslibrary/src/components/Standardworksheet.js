@@ -10,6 +10,7 @@ import axios from 'axios'
 
 
 
+
 class Standardworksheet extends Component{
   constructor(props){
     super(props)
@@ -22,8 +23,8 @@ class Standardworksheet extends Component{
   }
 
   componentDidMount = ()=>{
-  axios.post('http://localhost:3001/api/filterbystandard',{
-     worksheetstandard: this.props.filteredstandard
+  axios.post('http://localhost:3001/api/filterby',{
+     filtereditem: this.props.filtereditem
   }).then((response)=>{
     console.log(response.data)
     this.setState({
@@ -32,7 +33,28 @@ class Standardworksheet extends Component{
     })
   })
 }
-
+componentWillReceiveProps =(props)=>{
+  axios.post('http://localhost:3001/api/filterby',{
+     filtereditem: props.filtereditem
+  }).then((response)=>{
+    console.log(response.data)
+    this.setState({
+      ...this.state,
+      standardsOfGrades : response.data
+    })
+  })
+}
+sendtomycart=(e)=>{
+  console.log(e.target.value)
+  axios.post('http://localhost:3001/api/sendtomycart',{
+     cartcount: this.props.cartcount,
+     userid: this.props.userid,
+     productid: e.target.value
+  }).then((response)=>{
+    console.log(response.data.cartcount.cartcount)
+    this.props.updatecartcount(response.data.cartcount.cartcount)
+  })
+}
 
   render(){
       let filteredStandards= this.state.standardsOfGrades.map((each)=>{
@@ -40,10 +62,10 @@ class Standardworksheet extends Component{
            <div className="photo-card photoCard" >
                <embed className='pdfDisplay2 photo-background' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed>
                <div className="photo-details borderRight">
-                   <h6 >{each.title}</h6><hr/>
+                   <h6 >{each.title}</h6><p> by {each.nickname}</p><hr/>
                    <p className="price capitalize smallfont textStandard"><span className="capitalize standardspan">Standard: </span>{each.standard}</p><hr/>
                    <div className="buttonDiv">
-                   <a href='/productwholeinfo' className="detailsAnchor "><button onClick={this.sendproductid} className='detailsbtn addCartbtn detailsbutton' value={each.productid}>Add To Cart</button></a>
+                  <Link to="/standardworksheet" className="detailsAnchor "><button onClick={this.sendtomycart} className='detailsbtn addCartbtn detailsbutton' value={each.productid}>Add To Cart</button></Link>
                   <a href='/productwholeinfo' className="detailsAnchor"><button onClick={this.sendproductid} className='buttonHover detailsbtn detailsbutton' value={each.productid}>See Details</button></a>
                        <a href='/productwholeinfo' className="detailsAnchor"><button onClick={this.sendproductid} className='buttonHover detailsbtn wishbtn detailsbutton' value={each.productid}>Move to Wish List</button></a>
                        </div>
@@ -51,7 +73,7 @@ class Standardworksheet extends Component{
 
                <div className="photo-tags giveborder" >
                    <ul>
-                   <li className="price capitalize"><span className="capitalize">Grade: </span>{each.grade}  <span>Subject: </span> {each.subject}</li><hr/>
+                   <li className="price capitalize middleclm"><span className="capitalize">Grade: </span>{each.grade}  <span className="subject">Subject: </span> {each.subject}</li><hr/>
 
                    <li className="price"><span className="capitalize">Resource Type: </span>{each.resourcetype}</li>
 
@@ -116,7 +138,9 @@ const mapStateToProps = (state) => {
   return {
     //ctr: state.counter // this.props.ctr
     // userid:state.userid
-    filteredstandard : state.filteredstandard
+    filtereditem : state.filtereditem,
+    userid:state.userid,
+    cartcount:state.cartcount
   }
 }
 
@@ -124,7 +148,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
-    // updateUserType : () => dispatch({type: "UPDATEUSERTYPE"})
+    updatecartcount : (cartcount) => dispatch({type: "UPDATECARTCOUNT",cartcount:cartcount})
 
 
   }
