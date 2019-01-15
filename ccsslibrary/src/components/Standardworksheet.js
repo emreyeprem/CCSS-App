@@ -7,6 +7,7 @@ import '../assets/css/standardworksheet.css'
 import Footer from './Footer'
 import Filter from './Filter'
 import axios from 'axios'
+import history from '../history'
 
 
 
@@ -17,7 +18,8 @@ class Standardworksheet extends Component{
     this.state={
 
       worksheetstandard : '',
-      standardsOfGrades: []
+      standardsOfGrades: [],
+
 
     }
   }
@@ -32,6 +34,7 @@ class Standardworksheet extends Component{
       standardsOfGrades : response.data
     })
   })
+
 }
 componentWillReceiveProps =(props)=>{
   axios.post('http://localhost:3001/api/filterby',{
@@ -56,13 +59,30 @@ sendtomycart=(e)=>{
   })
 }
 
+
+getSearchValue = (e) =>{
+       this.setState({
+         ...this.state,
+         searchBoxValue : e.target.value
+       })
+
+
+     }
+sendValueToStore = ()=>{
+  this.props.sendSearchValue(this.state.searchBoxValue)
+  history.push('/search')
+
+}
+
+
+
   render(){
       let filteredStandards= this.state.standardsOfGrades.map((each)=>{
-       return <div className="container myproductContainer">
+       return <div className="container myproductContainer itemMainContainer">
            <div className="photo-card photoCard" >
                <embed className='pdfDisplay2 photo-background' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed>
                <div className="photo-details borderRight">
-                   <h6 >{each.title}</h6><p> by {each.nickname}</p><hr/>
+                   <h6 >{each.title}</h6><p>&#9783; Digital download</p><hr/>
                    <p className="price capitalize smallfont textStandard"><span className="capitalize standardspan">Standard: </span>{each.standard}</p><hr/>
                    <div className="buttonDiv">
                   <Link to="/standardworksheet" className="detailsAnchor "><button onClick={this.sendtomycart} className='detailsbtn addCartbtn detailsbutton' value={each.productid}>Add To Cart</button></Link>
@@ -73,18 +93,24 @@ sendtomycart=(e)=>{
 
                <div className="photo-tags giveborder" >
                    <ul>
+                   <a href="#" className="badge badge-secondary categoryTag">CCSS category &nbsp; &#10021;&#9776;</a>
                    <li className="price capitalize middleclm"><span className="capitalize">Grade: </span>{each.grade}  <span className="subject">Subject: </span> {each.subject}</li><hr/>
-
                    <li className="price"><span className="capitalize">Resource Type: </span>{each.resourcetype}</li>
-
-
-
-
                    </ul>
                </div>
                <div className="photo-tags ratingDiv" >
                    <ul>
+                   <a href="#" className="badge badge-secondary categoryTag">Item Info &nbsp; &#10021;&#9776;</a>
                    <li className="price ratingList"><span className="capitalize ratingSpan">Rating: </span><br />{each.rating}</li>
+
+                   <div className="stars">
+                     <span className="fa fa-star checked"></span>
+                     <span className="fa fa-star checked"></span>
+                     <span className="fa fa-star checked"></span>
+                     <span className="fa fa-star"></span>
+                     <span className="fa fa-star"></span>
+                   </div>
+
                    <li className="price priceList pricediv"><span className="capitalize">Price <br/> </span><span className="pricebold">${each.price}</span></li>
                    </ul>
                </div>
@@ -108,14 +134,14 @@ sendtomycart=(e)=>{
             </ul>
 
 
-          <div className="row padMar">
-              <div className="col padMar">
-                  <div className="input-group">
-                      <div className="input-group-prepend"></div><input className="form-control autocomplete searchbar" type="text" placeholder="Search  by  title  or  resource  type" />
-                      <div className="input-group-append"><button className="btn btn-warning searchbtn" type="button" ><i className="fa fa-search"></i></button></div>
-                  </div>
-              </div>
-          </div>
+            <div className="row padMar">
+                <div className="col padMar">
+                    <div className="input-group">
+                        <div className="input-group-prepend"></div><input onChange={this.getSearchValue} className="form-control autocomplete searchbar" type="text" placeholder="Search  by  title  or  resource  type" />
+                        <div className="input-group-append"><button onClick={this.sendValueToStore} className="btn btn-warning searchbtn" type="button" ><i className="fa fa-search"></i></button></div>
+                    </div>
+                </div>
+            </div>
       </header>
 
            <Filter />
@@ -140,7 +166,8 @@ const mapStateToProps = (state) => {
     // userid:state.userid
     filtereditem : state.filtereditem,
     userid:state.userid,
-    cartcount:state.cartcount
+    cartcount:state.cartcount,
+    searcValue:state.searchValue
   }
 }
 
@@ -148,7 +175,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
-    updatecartcount : (cartcount) => dispatch({type: "UPDATECARTCOUNT",cartcount:cartcount})
+    updatecartcount : (cartcount) => dispatch({type: "UPDATECARTCOUNT",cartcount:cartcount}),
+    sendSearchValue : (value) => dispatch({type: "SEARCHVALUE", searchValue: value})
 
 
   }

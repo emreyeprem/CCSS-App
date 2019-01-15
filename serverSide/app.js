@@ -159,7 +159,15 @@ app.post('/api/getmyproducts',function(req,res){
     res.json(response)
   })
 })
-
+// app.post('/api/filterbystandard',function(req,res){
+//     let worksheetstandard = req.body.worksheetstandard
+//     db.any('select u.nickname,u.userid,s.productid,s.rating,s.description,s.grade,s.resourcetype,s.subject,s.title,s.price,s.fileurl,s.standard from users u LEFT JOIN sellerproducts s on u.userid = s.userid where s.standard = $1',[worksheetstandard]).then((response)=>{
+//           res.json(response)
+//       }).catch((error)=>{
+//           console.log(error)
+//           res.json(error)
+//     })
+// })
 app.post('/api/sendtomycart',function(req,res){
   let userid = req.body.userid
   let productid = req.body.productid
@@ -173,17 +181,16 @@ app.post('/api/sendtomycart',function(req,res){
       res.json({success:true,cartcount:count})
     })
   })
-
 })
 app.post('/api/getcartitems',function(req,res){
   let userid=req.body.userid
-
   db.any('select * from buyerproducts b left join sellerproducts s on b.productid=s.productid left join users u on u.userid=s.userid where b.userid=$1 and status=$2',[userid,'await']).then((response)=>{
     let prices = response.map((each)=>{
-      return parseInt(each.price)
+      console.log(parseFloat(each.price))
+      return parseFloat(each.price)
     })
-    let total = prices.reduce((a,b)=>a+b,0)
-
+    let total = prices.reduce((a,b)=>a+b,0).toFixed(2)
+    console.log(total)
     res.json({response:response,total:total})
   })
 })
@@ -194,25 +201,39 @@ app.post('/api/deleteitem',function(req,res){
   db.none('delete from buyerproducts where id=$1',[id]).then(()=>{
     let count1 = parseInt(cartcount)-1
     db.one('update users set cartcount=$1 where userid=$2 returning cartcount',[count1,userid]).then((count2)=>{
-
-
       console.log(count2.cartcount)
       res.json({success:true,cartcount:count2.cartcount})
     })
   })
 })
+app.post('/api/searchby',function(req,res){
+  let searchValue= req.body.searchValue.toLowerCase()
+
+  db.any('select * from sellerproducts').then((response)=>{
+
+
+
+    let searchArr= response.filter((each)=>{
+
+return each.title.toLowerCase().includes(searchValue)==true || each.standard.toLowerCase().includes(searchValue)==true || each.keywords.toLowerCase().includes(searchValue)==true
+
+    })
+      console.log(searchArr)
+      res.json(searchArr)
+    })
+
+})
+
 app.post('/api/filterby',function(req,res){
     let filtereditem = req.body.filtereditem
     console.log(filtereditem)
-    db.any('select * from sellerproducts').then((response)=>{
-      if( filtereditem=='Free'){
-        console.log('free kisim')
+db.any('select * from sellerproducts').then((response)=>{
+      if(filtereditem=='Free'){
         let freeItems= response.filter((each)=>{
-          return each.price=='0'
+          return parseInt(each.price)== 0
         })
       res.json(freeItems)
     } else if(filtereditem == 'Under $5'){
-      console.log('under 5 kisim')
         let lessThanFiveDollarItems= response.filter((each)=>{
           return parseInt(each.price) < 4.99
         })
@@ -258,7 +279,7 @@ app.post('/api/filterby',function(req,res){
         return each.resourcetype=='Poster'
       })
       res.json(poster)
-    } else{
+    }else{
     db.any('select u.nickname,u.userid,s.productid,s.rating,s.description,s.grade,s.resourcetype,s.subject,s.title,s.price,s.fileurl,s.standard from users u LEFT JOIN sellerproducts s on u.userid = s.userid where s.standard = $1',[filtereditem]).then((response)=>{
           res.json(response)
       }).catch((error)=>{

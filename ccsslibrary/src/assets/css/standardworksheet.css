@@ -102,6 +102,10 @@ width: 320px;
   display: flex;
     justify-content: center;
 }
+.itemMainContainer{
+  height: 20rem !important;
+  margin-bottom: 2rem !important;
+}
 .photo-card{
   width:100% !important;
   max-width:900px !important;
@@ -144,4 +148,9 @@ width: 320px;
   font-weight: bold !important;
   color:black !important;
   font-size: 20px !important;
+}
+.categoryTag{
+  background-color: darkorange !important;
+  margin-left: -1rem !important;
+  margin-bottom: 1rem !important;
 }

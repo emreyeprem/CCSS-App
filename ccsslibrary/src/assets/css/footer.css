@@ -10,6 +10,8 @@ footer{
   display: block;
   z-index:3 !important;
   position:relative;
+  margin-top: 12rem !important;
+  
 
 }
 .lead{

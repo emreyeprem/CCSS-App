@@ -9,6 +9,7 @@ import 'rc-menu/assets/index.css';
 import axios from 'axios'
 import '../assets/css/filter.css'
 import '../assets/css/standards.css'
+import history from '../history'
 
   let config = {headers: {
     'Accept': 'application/json',
@@ -25,6 +26,21 @@ class Standards extends Component{
       standards: []
     }
   }
+
+  getSearchValue = (e) =>{
+         this.setState({
+           ...this.state,
+           searchBoxValue : e.target.value
+         })
+
+
+       }
+  sendValueToStore = ()=>{
+    this.props.sendSearchValue(this.state.searchBoxValue)
+    history.push('/search')
+
+  }
+
 
 componentWillReceiveProps = (props)=>{
   if(!props.subjectid==''){
@@ -75,7 +91,7 @@ getFilterValue =(e)=>{
 
      render(){
        let orderedStandards=this.state.standards.map((each)=>{
-          return <li><Link to='/standardworksheet'><input type="submit" onClick={this.getFilterValue} value={each}/></Link></li>
+          return <li className="listBtn"><Link to='/standardworksheet' className="standardInputBox"><input className="standardInputBox" type="submit" onClick={this.getFilterValue} value={each}/></Link></li>
               })
           return (
             <div>
@@ -91,14 +107,14 @@ getFilterValue =(e)=>{
             </ul>
 
 
-          <div className="row padMar">
-              <div className="col padMar">
-                  <div className="input-group">
-                      <div className="input-group-prepend"></div><input className="form-control autocomplete searchbar" type="text" placeholder="Search  by  title  or  resource  type" />
-                      <div className="input-group-append"><button className="btn btn-warning searchbtn" type="button" ><i className="fa fa-search"></i></button></div>
-                  </div>
-              </div>
-          </div>
+            <div className="row padMar">
+                <div className="col padMar">
+                    <div className="input-group">
+                        <div className="input-group-prepend"></div><input onChange={this.getSearchValue} className="form-control autocomplete searchbar" type="text" placeholder="Search  by  title  or  resource  type" />
+                        <div className="input-group-append"><button onClick={this.sendValueToStore} className="btn btn-warning searchbtn" type="button" ><i className="fa fa-search"></i></button></div>
+                    </div>
+                </div>
+            </div>
       </header>
          <div className="main-container">
            <div className="filterStandard-container">
@@ -108,7 +124,7 @@ getFilterValue =(e)=>{
            </div>
           <div className="standard-container">
 
-      <ul >
+      <ul className="standardListBtn">
         {orderedStandards}
       </ul>
 
@@ -135,7 +151,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
 resumeSubjectId : (value) => dispatch({type: "RESUMESUBJECTID"}),
-sendFilterValue : (value) => dispatch({type: "STANDARDVALUE", value: value})
+sendFilterValue : (value) => dispatch({type: "STANDARDVALUE", value: value}),
+sendSearchValue : (value) => dispatch({type: "SEARCHVALUE", searchValue: value})
+
   }
 }
 

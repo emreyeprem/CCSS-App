@@ -5,6 +5,7 @@ import {Link, NavLink} from 'react-router-dom'
 import Menu, { SubMenu, Item as MenuItem, Divider } from 'rc-menu';
 import '../assets/css/aboutus.css'
 import Footer from './Footer'
+import history from '../history'
 
 
 
@@ -15,6 +16,22 @@ class Aboutus extends Component{
 
     }
   }
+
+  getSearchValue = (e) =>{
+         this.setState({
+           ...this.state,
+           searchBoxValue : e.target.value
+         })
+
+
+       }
+ sendValueToStore = ()=>{
+    this.props.sendSearchValue(this.state.searchBoxValue)
+    history.push('/search')
+
+ }
+
+
 
 
   render(){
@@ -34,14 +51,14 @@ class Aboutus extends Component{
             </ul>
 
 
-          <div className="row padMar">
-              <div className="col padMar">
-                  <div className="input-group">
-                      <div className="input-group-prepend"></div><input className="form-control autocomplete searchbar" type="text" placeholder="Search  by  title  or  resource  type" />
-                      <div className="input-group-append"><button className="btn btn-warning searchbtn" type="button" ><i className="fa fa-search"></i></button></div>
-                  </div>
-              </div>
-          </div>
+            <div className="row padMar">
+                <div className="col padMar">
+                    <div className="input-group">
+                        <div className="input-group-prepend"></div><input onChange={this.getSearchValue} className="form-control autocomplete searchbar" type="text" placeholder="Search  by  title  or  resource  type" />
+                        <div className="input-group-append"><button onClick={this.sendValueToStore} className="btn btn-warning searchbtn" type="button" ><i className="fa fa-search"></i></button></div>
+                    </div>
+                </div>
+            </div>
       </header>
 
 
@@ -112,6 +129,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
     // updateUserType : () => dispatch({type: "UPDATEUSERTYPE"})
+    sendSearchValue : (value) => dispatch({type: "SEARCHVALUE", searchValue: value})
 
   }
 }
