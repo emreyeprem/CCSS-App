@@ -18,7 +18,9 @@ class Header extends Component{
       this.props.deleteToken()
 
     }
+  componentWillReceiveProps=(props)=>{
 
+  }
   render(){
           let withUser = ''
           let withoutUser = ''
@@ -26,14 +28,14 @@ class Header extends Component{
           let withSellerUser = ''
           let withRegularUser = ''
           if(this.props.usertype == 'regular'){
-            withRegularUser = <div className="cartWrapper"><div className="dropdown-menu userDropdown" role="menu"><Link to="/sellerregistration" className="dropdown-item">Become a seller</Link><Link to="/sellerpurchases" className="dropdown-item">My Purchases</Link><Link to="/viewcart" className="dropdown-item">My Cart</Link><Link to="/sellerwishlist" className="dropdown-item">My Wish List</Link><Link to="/" onClick={this.logout} className="dropdown-item" role="presentation" href="#">Logout</Link></div><span className="fa-stack fa-x has-badge cartImg" data-count=""><Link to='/viewcart'><i className="fa fa-shopping-cart number">{this.props.cartcount}</i></Link>
+            withRegularUser = <div className="cartWrapper"><div className="dropdown-menu userDropdown" role="menu"><Link to="/sellerregistration" className="dropdown-item">Become a seller</Link><Link to="/mypurchases" className="dropdown-item">My Purchases</Link><Link to="/viewcart" className="dropdown-item">My Cart</Link><Link to="/sellerwishlist" className="dropdown-item">My Wish List</Link><Link to="/" onClick={this.logout} className="dropdown-item" role="presentation" href="#">Logout</Link></div><span className="fa-stack fa-x has-badge cartImg" data-count=""><Link to='/viewcart'><i className="fa fa-shopping-cart number">{this.props.cartcount}</i></Link>
             </span></div>
           } else {
-            withSellerUser = <div className="cartWrapper"><div className="dropdown-menu userDropdown" role="menu"><Link to="/listproduct" className="dropdown-item">List a product</Link><Link to="/myproducts" className="dropdown-item">My products</Link><Link to="/sellerpurchases" className="dropdown-item">My Purchases</Link><Link to="/viewcart" className="dropdown-item">My Cart</Link><Link to="/sellerwishlist" className="dropdown-item">My Wish List</Link><Link to="/" onClick={this.logout} className="dropdown-item" role="presentation" href="#">Logout</Link></div><span className="fa-stack fa-x has-badge cartImg" data-count=""><Link to='/viewcart'><i className="fa fa-shopping-cart number">{this.props.cartcount}</i></Link>
+            withSellerUser = <div className="cartWrapper"><div className="dropdown-menu userDropdown" role="menu"><Link to="/listproduct" className="dropdown-item">List a product</Link><Link to="/myproducts" className="dropdown-item">My products</Link><Link to="/mypurchases" className="dropdown-item">My Purchases</Link><Link to="/viewcart" className="dropdown-item">My Cart</Link><Link to="/sellerwishlist" className="dropdown-item">My Wish List</Link><Link to="/" onClick={this.logout} className="dropdown-item" role="presentation" href="#">Logout</Link></div><span className="fa-stack fa-x has-badge cartImg" data-count=""><Link to='/viewcart'><i className="fa fa-shopping-cart number">{this.props.cartcount}</i></Link>
             </span></div>
           }
           if(!this.props.token==''){
-            withUser= <li className="nav-item dropdown"><a id="dropdown" className="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Welcome {this.props.username}</a>
+            withUser= <li className="nav-item dropdown"><a id="dropdown" className="dropdown-toggle nav-link greetingDiv" data-toggle="dropdown" aria-expanded="false" href="#">Welcome {this.props.username}</a>
               {withSellerUser}{withRegularUser}
             </li>
 
@@ -49,7 +51,7 @@ class Header extends Component{
          <div className="container headercontainer"><Link to="/" className="navbar-brand js-scroll-trigger"><img id="logo" src={ccsslogo}/></Link><button className="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" data-toggle="collapse"
                  data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i className="fa fa-bars"></i></button>
              <div className="collapse navbar-collapse" id="navbarResponsive">
-                 <ul className="nav navbar-nav ml-auto">
+                 <ul className="nav navbar-nav ml-auto ">
                     {withUser}{withoutUser}{withoutUser2}
 
                  </ul>
@@ -70,7 +72,8 @@ const mapStateToProps = (state) => {
      username: state.username,
      token: state.token,
      usertype : state.userType,
-     cartcount : state.cartcount
+     cartcount : state.cartcount,
+     userid: state.userid
   }
 }
 

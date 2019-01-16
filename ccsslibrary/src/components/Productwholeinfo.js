@@ -17,7 +17,7 @@ class Productwholeinfo extends Component{
     super(props)
     this.state={
       product:{},
-
+      productwithreviews: []
     }
   }
  componentDidMount =()=>{
@@ -26,7 +26,7 @@ class Productwholeinfo extends Component{
      ...this.state,
      fileurl:this.props.fileurl
    })
-   axios(`http://localhost:3001/api/${this.props.productid}`).then((response)=>{
+   axios(`http://localhost:3001/api/products/${this.props.productid}`).then((response)=>{
        console.log(response.data)
         console.log(response.data.description.toString())
         //this.props.sendFileUrl(response.data.fileurl)
@@ -35,19 +35,51 @@ class Productwholeinfo extends Component{
          product: response.data,
          description: response.data.description
        })
+       axios.post('http://localhost:3001/api/getallreviews',{
+         productid : response.data.productid
+       }).then((response)=>{
+         console.log(response.data)
+         this.setState({
+           ...this.state,
+           productwithreviews: response.data,
+
+         })
+       })
    }).catch((error)=>{
      console.log(error)
    })
  }
-
+ sendtomycart=(e)=>{
+   console.log(e.target.value)
+   axios.post('http://localhost:3001/api/sendtomycart',{
+      cartcount: this.props.cartcount,
+      userid: this.props.userid,
+      productid: e.target.value
+   }).then((response)=>{
+     console.log(response.data.cartcount.cartcount)
+     this.props.updatecartcount(response.data.cartcount.cartcount)
+   })
+ }
   render(){
+   let reviewsanduser = this.state.productwithreviews.map((each)=>{
+     return         <div className="review">
+                       <span className="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 
+                       by {each.username}
+                       <p className="blockquote">
+                           <p className="mb-0">{each.review}</p>
+                       </p>
+                       <hr/>
+                   </div>
+
+
+   })
 
     return (
       <div>
 
-      <div className="container containerBox ">
-   <div className="card pdfDocCard">
+      <div className="container containerBox">
+   <div className="card">
      <div className="container-fliud">
        <div className="wrapper row">
          <div className="preview col-md-6">
@@ -59,16 +91,16 @@ class Productwholeinfo extends Component{
 
 
          </div>
-         <div className="details col-md-6 itemInfoCard">
+         <div className="details col-md-6">
            <h3 className="product-title">{this.state.product.title}</h3>
            <div className="rating">
-             <div className="stars">
-               <span className="fa fa-star checked"></span>
-               <span className="fa fa-star checked"></span>
-               <span className="fa fa-star checked"></span>
-               <span className="fa fa-star"></span>
-               <span className="fa fa-star"></span>
-             </div>
+           <StarRatingComponent
+  name="rate2"
+  editing={false}
+
+  starCount={5}
+  value={Math.round(this.state.product.rating)}
+/>
              <span className="review-no">{this.state.product.rating}</span>
            </div>
            <p className="product-description">{this.state.product.standard}</p>
@@ -80,7 +112,7 @@ class Productwholeinfo extends Component{
 
 
            <div className="action buttonDiv">
-             <button className="add-to-cart btn btn-default" type="button">add to cart</button>
+             <button onClick={this.sendtomycart} value={this.state.product.productid} className="add-to-cart btn btn-default" type="button">add to cart</button>
              <button className="like btn btn-primary btn-block" type="button">Move to Wish List<span className="fa fa-heart"></span></button>
            </div>
          </div>
@@ -93,7 +125,7 @@ class Productwholeinfo extends Component{
 
 <div className="row descriptionCard">
  <div className="col-12 descriptionMainBox">
-            <div className="descriptionfield card border-light mb-3 itemDescriptionDiv">
+            <div className="descriptionfield card border-light mb-3">
                 <div className="card-header bg-primary text-white text-uppercase"><i className="fa fa-align-justify"></i> Description</div>
                 <div className="card-body">
                     <p className="card-text">
@@ -104,45 +136,14 @@ class Productwholeinfo extends Component{
                 </div>
             </div>
         </div>
-
-
         <div className="col-12 reviewCard itemDescriptionDiv" id="reviews">
-            <div className="card border-light mb-3">
-                <div className="card-header bg-primary text-white text-uppercase"><i className="fa fa-comment"></i> Reviews</div>
-                <div className="card-body ">
-                    <div className="review ">
-                        <span className="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        <meta itemprop="datePublished" content="01-01-2016"/>January 01, 2018
-
-                        <span className="fa fa-star"></span>
-                        <span className="fa fa-star"></span>
-                        <span className="fa fa-star"></span>
-                        <span className="fa fa-star"></span>
-                        <span className="fa fa-star"></span>
-                        by Paul Smith
-                        <p className="blockquote">
-                            <p className="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                        </p>
-                        <hr/>
-                    </div>
-                    <div className="review">
-                        <span className="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        <meta itemprop="datePublished" content="01-01-2016"/>January 01, 2018
-
-                        <span className="fa fa-star" aria-hidden="true"></span>
-                        <span className="fa fa-star" aria-hidden="true"></span>
-                        <span className="fa fa-star" aria-hidden="true"></span>
-                        <span className="fa fa-star" aria-hidden="true"></span>
-                        <span className="fa fa-star" aria-hidden="true"></span>
-                        by Paul Smith
-                        <p className="blockquote">
-                            <p className="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                        </p>
-                        <hr/>
-                    </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="card border-light mb-3">
+                  <div className="card-header bg-primary text-white text-uppercase"><i className="fa fa-comment"></i> Reviews</div>
+                  <div className="card-body">
+       {reviewsanduser}
+       </div>
+     </div>
+   </div>
               </div>
 
      <Footer/>
@@ -157,7 +158,11 @@ const mapStateToProps = (state) => {
   return {
     //ctr: state.counter // this.props.ctr
     productid: state.productid,
-    fileurl:state.fileurl
+    fileurl:state.fileurl,
+    filtereditem : state.filtereditem,
+    userid:state.userid,
+    cartcount:state.cartcount,
+    searchValue:state.searchValue
   }
 }
 
@@ -166,7 +171,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
   // sendFileUrl : (fileurl)=> dispatch({type:'FILEURL',fileurl:fileurl})
-
+  updatecartcount : (cartcount) => dispatch({type: "UPDATECARTCOUNT",cartcount:cartcount}),
   }
 }
 

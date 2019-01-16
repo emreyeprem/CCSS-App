@@ -14,18 +14,18 @@ import BaseLayout from './components/BaseLayout'
 import Login from './components/Login'
 import Register from './components/Register'
 import Standards from './components/Standards'
+import ListProduct from './components/ListProduct'
 import SellerRegistration from './components/SellerRegistration'
 import Aboutus from './components/Aboutus'
-import ListProduct from './components/ListProduct'
-import Viewcart from './components/Viewcart'
-import MyProducts from './components/MyProducts'
-import Search from './components/Search'
-import Standardworksheet from './components/Standardworksheet'
 import ProductWholeInfo from './components/ProductWholeInfo'
-//import Header from './components/Header'
+import MyProducts from './components/MyProducts'
+import Viewcart from './components/Viewcart'
 import {persistor, store} from './store/configureStore'
-
-
+import Standardworksheet from './components/Standardworksheet'
+import MyPurchases from './components/MyPurchases'
+import LeaveReview from './components/LeaveReview'
+import Search from './components/Search'
+import Help from './components/Help'
 ReactDOM.render(<Provider store = {store}>
   <PersistGate loading={null} persistor={persistor}>
   <Router history={history}>
@@ -37,16 +37,17 @@ ReactDOM.render(<Provider store = {store}>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/standards" component={Standards} />
-      <Route path="/viewcart" component={Viewcart} />
-      <Route path="/aboutus" component={Aboutus} />
-      <Route path="/search" component={Search} />
-      <Route path="/myproducts" component={MyProducts} />
-      <Route path="/standardworksheet" component={Standardworksheet} />
-      <Route path="/productwholeinfo" component={ProductWholeInfo} />
       <Route path="/listproduct" component={ListProduct} />
       <Route path="/sellerregistration" component={SellerRegistration} />
-
-
+      <Route path="/aboutus" component={Aboutus} />
+      <Route path="/productwholeinfo" component={ProductWholeInfo} />
+      <Route path="/myproducts" component={MyProducts} />
+      <Route path="/mypurchases" component={MyPurchases} />
+      <Route path="/viewcart" component={Viewcart} />
+      <Route path="/standardworksheet" component={Standardworksheet} />
+      <Route path="/leavereview" component={LeaveReview} />
+      <Route path="/search" component={Search} />
+      <Route path="/help" component={Help} />
     </Switch>
 
   </BaseLayout>

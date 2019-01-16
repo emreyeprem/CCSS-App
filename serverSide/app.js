@@ -1,11 +1,23 @@
-const bodyParser = require('body-parser');
 const express = require('express')
-const app = express();
-const PORT = 3001
-const bcrypt = require('bcrypt');
-var cors = require('cors')
-const pgp= require('pg-promise')()
 const fileUpload = require('express-fileupload');
+const SERVER_CONFIGS = require('./constants/server');
+
+const configureServer = require('./server');
+const configureRoutes = require('./routes');
+
+const app = express();
+
+configureServer(app);
+configureRoutes(app);
+
+//var bodyParser = require('body-parser')
+const PORT = 3001
+
+const bcrypt = require('bcrypt');
+//var cors = require('cors')
+//app.use(cors())
+const pgp= require('pg-promise')()
+//const fileUpload = require('express-fileupload');
 const connectionString= {
     "host": "localhost",
     "port": 5432,
@@ -15,24 +27,26 @@ const connectionString= {
 
 const db = pgp(connectionString)
 const jwt = require('jsonwebtoken')
-app.use(cors())
-// parse application/json
-app.use(bodyParser.json())
 
+//app.use(bodyParser.json())
+//const dotEnv = require('dotenv').config()
 app.use('/pdfFiles',express.static('pdfFiles'))
 app.use(fileUpload());
-app.use(function(req, res, next) {
-  //
-  // res.header("Access-Control-Allow-Headers: Authorization")
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, Authorization,X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   //
+//   // res.header("Access-Control-Allow-Headers: Authorization")
+//   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, Authorization,X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 app.listen(PORT, function(){
   console.log('Server is running...')
 })
+
+
+
 //---------------------------------------------------------------
 app.post('/api/register',function(req,res){
   let username = req.body.username
@@ -41,7 +55,7 @@ app.post('/api/register',function(req,res){
   let userType = 'regular'
   let cartcount = 0
   db.one('SELECT userid,username,email,password,usertype FROM users WHERE email = $1',[email]).then((user)=>{
- console.log(user)
+
  res.json('This email is already taken. Please try with different credential!')
 
  }).catch((error)=>{
@@ -60,13 +74,15 @@ app.post('/api/register',function(req,res){
    }
 })
 })
+
+
+
 app.post('/api/login',function(req,res){
   let email = req.body.email
   let password = req.body.password
-  console.log(email)
-  console.log(password)
+
   db.one('SELECT userid,email,password,username,usertype,cartcount FROM users WHERE email = $1',[email]).then((response)=>{
-    console.log(response)
+
     bcrypt.compare(password,response.password,function(error,result){
       if(result) {
         const token = jwt.sign({ id : response.userid },"somesecretkey")
@@ -83,6 +99,8 @@ if(error.received == 0){
 })
 
 })
+
+
 app.post('/api/sellerregister',function(req,res){
  let nickname = req.body.nickname
  let paypalEmail = req.body.paypalEmail
@@ -95,6 +113,8 @@ app.post('/api/sellerregister',function(req,res){
  })
 
 })
+
+
 app.post('/api/listproduct',function(req,res){
   let rating = 'No rating yet'
   let description = req.body.description
@@ -107,7 +127,7 @@ app.post('/api/listproduct',function(req,res){
   let price=req.body.price
   let userid = req.body.userid
   let fileurl = req.body.fileurl
-  console.log(fileurl)
+
 db.one('insert into sellerproducts (rating,description,grade,subject,standard,keywords,title,resourcetype,price,userid,fileurl) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) returning productid',[rating,description,grade,subject,standard,keywords,title,resourcetype,price,userid,fileurl]).then((response)=>{
   // db.one('select productid from sellerproducts where fileurl=$1',[fileurl]).then((response)=>{
     res.json({success:true,productid:response.productid})
@@ -120,6 +140,8 @@ db.one('insert into sellerproducts (rating,description,grade,subject,standard,ke
 
 
 })
+
+//
 //--------to generate random unique id for pdf files--------------
 function guid() {
   return "ss-s-s-s-sss".replace(/s/g, s4);
@@ -134,10 +156,8 @@ function s4() {
 //-------------to send pdf file to 'pdfFiles folder' inside server side------------------------------
 app.post('/upload', (req, res, next) => {
 let uniqueid = guid()
-
   let pdfFile = req.files.file;
 
-  console.log(pdfFile)
   pdfFile.mv(`${__dirname}/pdfFiles/${uniqueid}.pdf`, function(err) {
       if (err) {
         return res.status(500).send(err);
@@ -147,9 +167,17 @@ let uniqueid = guid()
     });
 
 })
-app.get('/api/:productid',function(req,res){
+
+
+app.get('/api/products/:productid',function(req,res){
   let productid = req.params.productid
   db.one('select * from sellerproducts where productid=$1',[productid]).then((response)=>{
+    res.json(response)
+  })
+})
+app.post('/api/getallreviews',function(req,res){
+  let productid=req.body.productid
+  db.any('select * from buyerproducts b left join users u on u.userid=b.userid where productid=$1 and status=$2',[productid,'sold']).then((response)=>{
     res.json(response)
   })
 })
@@ -159,39 +187,40 @@ app.post('/api/getmyproducts',function(req,res){
     res.json(response)
   })
 })
-// app.post('/api/filterbystandard',function(req,res){
-//     let worksheetstandard = req.body.worksheetstandard
-//     db.any('select u.nickname,u.userid,s.productid,s.rating,s.description,s.grade,s.resourcetype,s.subject,s.title,s.price,s.fileurl,s.standard from users u LEFT JOIN sellerproducts s on u.userid = s.userid where s.standard = $1',[worksheetstandard]).then((response)=>{
-//           res.json(response)
-//       }).catch((error)=>{
-//           console.log(error)
-//           res.json(error)
-//     })
-// })
+
 app.post('/api/sendtomycart',function(req,res){
   let userid = req.body.userid
   let productid = req.body.productid
   let cartcount = req.body.cartcount
   let count = parseInt(cartcount)+1
-  console.log(count)
+ console.log('Artirilmis count'+count)
   let status='await'
   db.none('insert into buyerproducts (userid,productid,status) values ($1,$2,$3)',[userid,productid,status]).then(()=>{
     db.one('update users set cartcount=$1 where userid=$2 returning cartcount',[count,userid]).then((count)=>{
-      console.log(count)
+       console.log('db den gelen count'+count.cartcount)
       res.json({success:true,cartcount:count})
     })
   })
+
 })
 app.post('/api/getcartitems',function(req,res){
   let userid=req.body.userid
+
   db.any('select * from buyerproducts b left join sellerproducts s on b.productid=s.productid left join users u on u.userid=s.userid where b.userid=$1 and status=$2',[userid,'await']).then((response)=>{
     let prices = response.map((each)=>{
-      console.log(parseFloat(each.price))
+
       return parseFloat(each.price)
     })
     let total = prices.reduce((a,b)=>a+b,0).toFixed(2)
-    console.log(total)
+
     res.json({response:response,total:total})
+  })
+})
+app.post('/api/updatecartitems',function(req,res){
+  let userid = req.body.userid
+  let status = 'sold'
+  db.none('update buyerproducts set status = $1 where userid=$2',[status,userid]).then(()=>{
+    res.json({success:true})
   })
 })
 app.post('/api/deleteitem',function(req,res){
@@ -201,7 +230,7 @@ app.post('/api/deleteitem',function(req,res){
   db.none('delete from buyerproducts where id=$1',[id]).then(()=>{
     let count1 = parseInt(cartcount)-1
     db.one('update users set cartcount=$1 where userid=$2 returning cartcount',[count1,userid]).then((count2)=>{
-      console.log(count2.cartcount)
+
       res.json({success:true,cartcount:count2.cartcount})
     })
   })
@@ -288,4 +317,55 @@ db.any('select * from sellerproducts').then((response)=>{
     })
   }
 })
+})
+app.post('/api/updatestatus',function(req,res){
+  let userid = req.body.userid
+  db.none('update buyerproducts set status=$1 where userid=$2',['sold',userid]).then(()=>{
+
+    res.json({success:true})
+  })
+})
+app.post('/api/updatecartcount',function(req,res){
+  let userid = req.body.userid
+  let cartcount = req.body.cartcount
+  console.log('userid: '+ userid)
+  console.log('cartcount :' +cartcount)
+  db.none('update users set cartcount=$1 where userid=$2',[0,userid]).then(()=>{
+    res.json({success:true})
+  })
+})
+app.post('/api/getmypurchases',function(req,res){
+  let userid = req.body.userid
+  db.any('select * from buyerproducts b left join sellerproducts s on s.productid=b.productid where status=$1 and b.userid=$2',['sold',userid]).then((response)=>{
+    res.json(response)
+  })
+})
+app.post('/api/sendFeedback',function(req,res){
+  console.log('hey')
+  let productreviewid = req.body.productreviewid
+  let rating=req.body.rating
+  let textvalue = req.body.textvalue
+  let userid = req.body.userid
+  let finalrating;
+  db.one('select * from sellerproducts where productid=$1',[productreviewid]).then((response)=>{
+    if(response.rating == 'No rating yet'){
+      finalrating = rating
+    }else{
+      finalrating = (parseFloat(response.rating) + parseFloat(rating))/2
+    }
+        db.none('update sellerproducts set rating=$1 where productid=$2',[finalrating.toFixed(1),productreviewid])
+        db.none('update buyerproducts set review=$1,rating=$2 where userid=$3 and productid=$4',[textvalue,finalrating,userid,productreviewid]).then(()=>{
+          res.json({success:true})
+        })
+  })
+})
+
+
+app.get('/api/getpopularitems',function(req,res){
+  db.any("select productid from buyerproducts where status=$1",['sold']).then((response)=>{
+    console.log(response)
+    res.json(response)
+  }).catch((error)=>{
+    res.json(error)
+  })
 })

@@ -5,6 +5,7 @@ import axios from 'axios'
 import '../assets/css/myproducts.css'
 import Filter from './Filter'
 import Footer from './Footer'
+import StarRatingComponent from 'react-star-rating-component';
 
 class MyProducts extends Component{
   constructor(props){
@@ -17,7 +18,6 @@ componentDidMount=()=>{
   axios.post('http://localhost:3001/api/getmyproducts',{
     userid: this.props.userid
   }).then((response)=>{
-    console.log(response)
     this.setState({
       ...this.state,
       items: response.data
@@ -34,19 +34,26 @@ sendproductid=(e)=>{
        return <div className="container myproductContainer">
            <div className="photo-card" >
                <embed className='pdfDisplay2 photo-background' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed>
-               <div className="photo-details photoInfoDiv">
-                   <h1 className="productTitle">{each.title}</h1><hr/>
+               <div className="photo-details">
+                   <h1 >{each.title}</h1><hr/>
                    <p className="price capitalize smallfont"><span className="capitalize standardspan">Standard: </span>{each.standard}</p><hr/>
                    <p className="price capitalize"><span className="capitalize">Grade: </span>{each.grade} / <span>Subject: </span> {each.subject}</p><hr/>
 
                    <p className="price"><span className="capitalize">Resource Type: </span>{each.resourcetype}</p>
                </div>
-               <div className="photo-tags" >
+               <div className="photo-tags tags" >
                    <ul>
                    <li className="ratingbtn">Rating</li>
-                   <li className="ratingnumber">{each.rating}</li> <hr/>
-                   <li className="ratingbtnprice">Price</li><br/>
-                   <li className="pricenumber">${each.price}</li>
+                   <li className="ratingnumber">{each.rating}</li>
+                   <li className="starRating"><StarRatingComponent
+           name="rate2"
+           editing={false}
+
+           starCount={5}
+           value={Math.round(each.rating)}
+         /></li><hr/>
+                   <div className="priceDiv"><li className="ratingbtnprice">Price</li><br/>
+                   <li className="pricenumber">${each.price}</li></div>
                    <li><a className='buttonHover downloadbtn' href={each.fileurl} target="_blank" download>Print File</a></li>
                        <a href='/productwholeinfo' className="detailsAnchor"><li><button onClick={this.sendproductid} className='buttonHover detailsbtn' value={each.productid}>See Details</button></li></a>
 

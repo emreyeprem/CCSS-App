@@ -43,3 +43,25 @@
 .itemMainCard{
   height:auto !important;
 }
+/* ----------stripe css------------- */
+.StripeCheckout span{
+   visibility:hidden;
+
+}
+.StripeCheckout span:after{
+  content: 'CHECKOUT';
+  visibility:visible;
+  margin-left: -90px;
+
+}
+.StripeCheckout{
+  width: 200px;
+background: #28a745 !important;
+margin-left: 35px;
+height: 40px;
+}
+.paymentMessage{
+  color:green;
+  margin-top: 200px !important;
+
+}

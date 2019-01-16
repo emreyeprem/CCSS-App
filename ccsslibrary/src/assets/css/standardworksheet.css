@@ -101,10 +101,41 @@ width: 320px;
 .myproductContainer{
   display: flex;
     justify-content: center;
+    height: auto !important;
+    margin-bottom: 5rem !important;
 }
 .itemMainContainer{
-  height: 20rem !important;
   margin-bottom: 2rem !important;
+}
+.ratingBox2{
+  list-style-type: none !important;
+
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 87.5%;
+  margin-top: 3rem;
+  text-transform: lowercase;
+}
+.ratingBox{
+  list-style-type: none !important;
+
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 87.5%;
+  /* margin-top: 3rem; */
+  text-transform: lowercase;
+}
+.ratingBox3{
+  list-style-type: none !important;
+
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 87.5%;
+  /* margin-top: 3rem; */
+  text-transform: lowercase;
 }
 .photo-card{
   width:100% !important;
@@ -153,4 +184,7 @@ width: 320px;
   background-color: darkorange !important;
   margin-left: -1rem !important;
   margin-bottom: 1rem !important;
+}
+.photoCard{
+  margin-bottom: -80px !important;
 }

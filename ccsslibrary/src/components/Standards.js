@@ -98,7 +98,7 @@ getFilterValue =(e)=>{
             <header className="masthead bg-primary text-white text-center searchheader" >
 
 
-            <ul className="listItemUl">
+            <ul className="listItemUl standardHomeLink">
             <Link to="/"><li className="listItemHeader">Home</li></Link>
             <Link to="/aboutus"><li className="listItemHeader">About Us</li></Link>
               <li className="listItemHeader">Help</li>

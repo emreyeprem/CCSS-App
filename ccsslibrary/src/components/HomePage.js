@@ -5,9 +5,9 @@ import Footer from './Footer'
 import '../assets/css/homepage.css'
 import Filter from './Filter'
 import deskimg from '../assets/img/desk.jpg'
-import {button, Navbutton} from 'react-router-dom'
 import {Link, NavLink} from 'react-router-dom'
 import history from '../history'
+import axios from 'axios'
 
 class HomePage extends Component {
   constructor(props){
@@ -16,7 +16,13 @@ class HomePage extends Component {
       searchBoxValue : ""
     }
   }
-
+componentDidMount=()=>{
+  axios('http://localhost:3001/api/getpopularitems').then((response)=>{
+         console.log(response.data)
+  }).catch((error)=>{
+    console.log(error)
+  })
+}
   getSearchValue = (e) =>{
          this.setState({
            ...this.state,
@@ -31,7 +37,6 @@ class HomePage extends Component {
 
  }
 
-
   render() {
 
 
@@ -40,37 +45,33 @@ class HomePage extends Component {
 
       <header className="masthead bg-primary text-white text-center searchheader" >
 
+
             <ul className="listItemUl">
               <Link to="/"><li className="listItemHeader">Home</li></Link>
-              <Link to="/aboutus"><li className="listItemHeader">About Us</li></Link>
-              <li className="listItemHeader">Help</li>
+              <Link to='/aboutus'><li className="listItemHeader">About Us</li></Link>
+              <Link to='/help'><li className="listItemHeader">Help</li></Link>
               <li className="listItemHeader">Schools</li>
               <hr />
             </ul>
 
 
-
-
-
-          <div className="row padMar">
-              <div className="col padMar">
-                  <div className="input-group">
-                      <div className="input-group-prepend"></div><input onChange={this.getSearchValue} className="form-control autocomplete searchbar" type="text" placeholder="Search  by  title  or  resource  type" />
-                      <div className="input-group-append"><button onClick={this.sendValueToStore} className="btn btn-warning searchbtn" type="button" ><i className="fa fa-search"></i></button></div>
-                  </div>
-              </div>
-          </div>
+            <div className="row padMar">
+                 <div className="col padMar">
+                     <div className="input-group">
+                         <div className="input-group-prepend"></div><input onChange={this.getSearchValue} className="form-control autocomplete searchbar" type="text" placeholder="Search  by  title  or  resource  type" />
+                         <div className="input-group-append"><button onClick={this.sendValueToStore} className="btn btn-warning searchbtn" type="button" ><i className="fa fa-search"></i></button></div>
+                     </div>
+                 </div>
+             </div>
       </header>
 
      <Filter />
 
 
 
-
-
      <section id="portfolio" className="portfolio cardMainContainer" >
          <aside></aside>
-         <div className="container gradeContainer">
+         <div className="gradeContainer">
              <h3 className="text-uppercase text-center text-secondary gradeSection"> Elementary School Popular Resources</h3>
              <hr className="star-dark mb-5 starSign"/>
              <div className="row">
@@ -89,7 +90,7 @@ class HomePage extends Component {
          </div>
          </div>
          </div>
-         <div className="container">
+         <div className="">
              <h3 className="text-uppercase text-center text-secondary gradeSection" >Middle School Popular Resources</h3>
              <hr className="star-dark mb-5 starSign" />
              <div className="row">
@@ -108,7 +109,7 @@ class HomePage extends Component {
          </div>
          </div>
          </div>
-         <div className="container">
+         <div className="">
              <h3 className="text-uppercase text-center text-secondary gradeSection" >High School Popular Resources</h3>
              <hr className="star-dark mb-5 starSign" />
              <div className="row">
@@ -135,7 +136,6 @@ class HomePage extends Component {
     )
   }
 }
-
 
 // map global state to local props
 const mapStateToProps = (state) => {

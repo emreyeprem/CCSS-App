@@ -26,7 +26,14 @@ width: 320px;
 .detailsAnchor{
 
     background-color: white !important;
-
+}
+.priceDiv{
+  display:flex !important;
+  flex-direction: column !important;
+  margin-top: -2.5rem !important;
+}
+.starRating{
+  margin-left: 1.5rem !important;
 }
 .photo-details{
     background-color: white;

@@ -56,7 +56,7 @@
   margin-bottom: 0.35em;
 }
 
-.photo-tags ul {
+.tags ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -88,4 +88,3 @@
 .photo-details p {
   color: white;
 }
-

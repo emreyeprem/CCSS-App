@@ -1,12 +1,14 @@
 .standard-container{
 margin-top: 10px !important;
-margin-left: 275px !important;
+margin-left: 21rem !important;
 
 }
 .standardListBtn{
   /* list-style: none !important; */
 }
-
+.standardHomeLink{
+  margin-left: 67rem !important;
+}
 .standardInputBox {
   height: auto !important;
   background-image:none !important;

@@ -79,7 +79,19 @@ const reducer = (state = initialState, action) => {
        ...state,
        cartcount: action.cartcount
       }
-  } else if(action.type == "SEARCHVALUE"){
+  }else if(action.type == "UPDATESTATUS"){
+
+     return {
+      ...state,
+    status: action.value
+     }
+ }else if(action.type == "PRODUCTREVIEWID"){
+
+    return {
+     ...state,
+   productreviewid: action.productid
+    }
+}else if(action.type == "SEARCHVALUE"){
    return {  ...state,
    searchValue : action.searchValue
 

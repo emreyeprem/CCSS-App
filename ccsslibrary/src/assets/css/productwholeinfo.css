@@ -189,7 +189,7 @@
   height: 450px;
   padding-top: 20px;
 }
-.descriptionField{
+.descriptionfield{
    height: auto !important;
 }
 .itemDescriptionDiv{
@@ -198,4 +198,7 @@
 .reviewCardBody{
   height:auto !important;
   padding-top: 0 !important;
+}
+.rating{
+  display:flex;
 }
