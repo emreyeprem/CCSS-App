@@ -26,7 +26,12 @@
 .alertContainer{
   display: flex !important;
   flex-direction: column !important;
-  margin-left: 6rem !important;
+  margin-left: 4rem !important;
+  width: 60rem !important;
+}
+.nmbrBox{
+  height: 3.5rem !important;
+  width:3rem !important;
 }
 .sliderAlertDiv{
   display: flex !important;
@@ -42,8 +47,9 @@
     color: #454444;
 }
 .slideHeight{
-  height: 18rem !important;
-  width: 20vw !important;
+  margin-top: 2rem !important;
+  height: 280px !important;
+  width: 420px !important;
 }
 .faq_num {
     background: #007715;
