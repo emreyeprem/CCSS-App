@@ -4,7 +4,7 @@
 
 }
 .standardHeaderList{
-  margin-left: 50rem !important;
+  margin-left: 59rem !important;
 }
 
 .photoCard{
@@ -187,4 +187,7 @@ width: 320px;
 }
 .photoCard{
   margin-bottom: -80px !important;
+}
+.myproductContainer{
+  margin-bottom: -40px !important;
 }

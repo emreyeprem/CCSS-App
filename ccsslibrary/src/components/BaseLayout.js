@@ -22,13 +22,12 @@ import Search from './Search'
 import Help from './Help'
 //------------css---------------
 import '../assets/bootstrap/css/bootstrap.min.css'
+import '../assets/css/responsive.css'
 import '../assets/fonts/font-awesome.min.css'
 import '../assets/css/Card-Group-Classic.css'
 import '../assets/css/dh-card-image-left-dark.css'
 import '../assets/css/trelyco-login-vertical-horizontal-1.css'
 import '../assets/css/trelyco-login-vertical-horizontal.css'
-
-
 
 
 
@@ -47,7 +46,6 @@ class BaseLayout extends Component{
      {this.props.children}
 
      </div>
-
 
 
     )

@@ -46,8 +46,8 @@ ReactDOM.render(<Provider store = {store}>
       <Route path="/viewcart" component={Viewcart} />
       <Route path="/standardworksheet" component={Standardworksheet} />
       <Route path="/leavereview" component={LeaveReview} />
-      <Route path="/search" component={Search} />
-      <Route path="/help" component={Help} />
+        <Route path="/search" component={Search} />
+        <Route path="/help" component={Help} />
     </Switch>
 
   </BaseLayout>

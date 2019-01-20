@@ -21,7 +21,7 @@ const pgp= require('pg-promise')()
 const connectionString= {
     "host": "localhost",
     "port": 5432,
-    "database": "ccss",
+    "database": "ccssdb",
     "user": "postgres"
   };
 
@@ -212,7 +212,7 @@ app.post('/api/getcartitems',function(req,res){
       return parseFloat(each.price)
     })
     let total = prices.reduce((a,b)=>a+b,0).toFixed(2)
-
+     console.log(response)
     res.json({response:response,total:total})
   })
 })
@@ -362,9 +362,35 @@ app.post('/api/sendFeedback',function(req,res){
 
 
 app.get('/api/getpopularitems',function(req,res){
-  db.any("select productid from buyerproducts where status=$1",['sold']).then((response)=>{
-    console.log(response)
-    res.json(response)
+  db.any("select * from buyerproducts b left join sellerproducts s on b.productid=s.productid where status=$1",['sold']).then((response)=>{
+
+    let elemObjArr = response.filter((each)=>{
+      return each.grade=='Grade K'||each.grade=='Grade 1'||each.grade=='Grade 2'||each.grade=='Grade 3'||each.grade=='Grade 4'||each.grade=='Grade 5'
+    })
+    elemObjArr.sort(function(a, b) {
+       return b.productid - a.productid;
+    })
+    let first5ElemItems = elemObjArr.slice(0,5)
+    console.log(first5ElemItems)
+    //---------------------------------
+    let middleObjArr = response.filter((each)=>{
+      return each.grade=='Grade 6'||each.grade=='Grade 7'||each.grade=='Grade 8'
+    })
+    middleObjArr.sort(function(a, b) {
+       return b.productid - a.productid;
+    })
+    let first5MiddleItems = middleObjArr.slice(0,5)
+    console.log(first5MiddleItems)
+    //-------------------------------
+    let highObjArr = response.filter((each)=>{
+      return each.grade=='Grade 9'
+    })
+    highObjArr.sort(function(a, b) {
+       return b.productid - a.productid;
+    })
+    let first5HighItems = highObjArr.slice(0,5)
+    console.log(first5HighItems)
+    res.json({elem:first5ElemItems,middle:first5MiddleItems,high:first5HighItems})
   }).catch((error)=>{
     res.json(error)
   })

@@ -8,17 +8,26 @@ import deskimg from '../assets/img/desk.jpg'
 import {Link, NavLink} from 'react-router-dom'
 import history from '../history'
 import axios from 'axios'
+import StarRatingComponent from 'react-star-rating-component';
 
 class HomePage extends Component {
   constructor(props){
     super(props)
     this.state = {
-      searchBoxValue : ""
+      searchBoxValue : "",
+      elem:[],
+      middle:[],
+      high:[]
     }
   }
 componentDidMount=()=>{
   axios('http://localhost:3001/api/getpopularitems').then((response)=>{
-         console.log(response.data)
+         this.setState({
+           ...this.state,
+           elem: response.data.elem,
+           middle: response.data.middle,
+           high:response.data.high
+         })
   }).catch((error)=>{
     console.log(error)
   })
@@ -36,9 +45,56 @@ componentDidMount=()=>{
     history.push('/search')
 
  }
+ sendproductid=(e)=>{
+   console.log(e)
+   this.props.sendProductIdForWholePage(e)
 
+ }
   render() {
+   let elemItems = this.state.elem.map((each)=>{
+     return <div className="col-md-4 offset-0 d-flex flex-column cust_blogteaser cardSelf" ><a href="#"><embed className='pdfDisplay3 img-fluid' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed></a>
+         <h3 className="cardTitle">{each.title.slice(0,27)+'...'}</h3>
+         <p className="text-secondary cardText" >{each.standard.slice(0,75)+'...'}</p><p className="text-secondary cardText subjectText" >{each.grade} / {each.subject}<br/>
+         <div className="combineRating"><StarRatingComponent
+ name="rate2"
+ editing={false}
 
+ starCount={5}
+ value={Math.round(each.rating)}
+/> &nbsp;&nbsp;&nbsp;<p>{each.rating}</p></div>
+         </p>
+         <h4>${each.price}</h4>
+        <a href="/productwholeinfo" className='h4'><button className="arrowDiv" onClick={() => this.sendproductid(each.productid)}><i className="fa fa-arrow-circle-right" ></i></button></a></div>
+   })
+   let middleItems = this.state.middle.map((each)=>{
+     return <div className="col-md-4 offset-0 d-flex flex-column cust_blogteaser cardSelf" ><a href="#"><embed className='pdfDisplay3 img-fluid' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed></a>
+         <h3 className="cardTitle">{each.title.slice(0,27)+'...'}</h3>
+         <p className="text-secondary cardText" >{each.standard.slice(0,75)+'...'}</p><p className="text-secondary cardText subjectText" >{each.grade} / {each.subject}<br/>
+         <div className="combineRating"><StarRatingComponent
+ name="rate2"
+ editing={false}
+ starCount={5}
+ value={Math.round(each.rating)}
+/> &nbsp;&nbsp;&nbsp;<p>{each.rating}</p></div>
+         </p>
+         <h4>${each.price}</h4>
+         <Link to='/productwholeinfo' href="#" className="h4 arrowDiv"><i className="fa fa-arrow-circle-right"></i></Link></div>
+   })
+   let highItems = this.state.high.map((each)=>{
+     return <div className="col-md-4 offset-0 d-flex flex-column cust_blogteaser cardSelf" ><a href="#"><embed className='pdfDisplay3 img-fluid' src={each.fileurl} scroll="no" seamless="seamless" frameborder="0"></embed></a>
+         <h3 className="cardTitle">{each.title.slice(0,27)+'...'}</h3>
+         <p className="text-secondary cardText" >{each.standard.slice(0,75)+'...'}</p><p className="text-secondary cardText subjectText" >{each.grade} / {each.subject}<br/>
+         <div className="combineRating"><StarRatingComponent
+ name="rate2"
+ editing={false}
+
+ starCount={5}
+ value={Math.round(each.rating)}
+/> &nbsp;&nbsp;&nbsp;<p>{each.rating}</p></div>
+         </p>
+         <h4>${each.price}</h4>
+         <Link to='/productwholeinfo' href="#" className="h4 arrowDiv"><i className="fa fa-arrow-circle-right"></i></Link></div>
+   })
 
     return(
       <div>
@@ -79,10 +135,9 @@ componentDidMount=()=>{
                      <div className="cardDiv2">
                          <div className="container cardContainer">
                              <div className="cust_bloglistintro"></div>
-                             <div className="row flex-nowrap">
-                                 <div className="col-md-4 offset-0 d-flex flex-column cust_blogteaser cardSelf" ><a href="#"><img className="img-fluid" src={deskimg} /></a>
-                                     <h3 className="cardTitle">Heading</h3>
-                                     <p className="text-secondary cardText" >Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id. </p><hr className="cardHr" /><a href="#" className="h4"><i className="fa fa-arrow-circle-right"></i></a></div>
+                             <div className="row flex-nowrap marginTop">
+
+                                     {elemItems}
 
                  </div>
              </div>
@@ -99,10 +154,7 @@ componentDidMount=()=>{
                          <div className="container cardContainer">
                              <div className="cust_bloglistintro"></div>
                              <div className="row flex-nowrap">
-                                 <div className="col-md-4 offset-0 d-flex flex-column cust_blogteaser cardSelf" ><a href="#"><img className="img-fluid" src={deskimg} /></a>
-                                     <h3>Heading</h3>
-                                     <p className="text-secondary cardText" >Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id. </p><a href="#" className="h4"><i className="fa fa-arrow-circle-right"></i></a></div>
-
+                                {middleItems}
                  </div>
              </div>
          </div>
@@ -118,10 +170,7 @@ componentDidMount=()=>{
                          <div className="container cardContainer">
                              <div className="cust_bloglistintro"></div>
                              <div className="row flex-nowrap">
-                                 <div className="col-md-4 offset-0 d-flex flex-column cust_blogteaser cardSelf"><a href="#"><img className="img-fluid" src={deskimg} /></a>
-                                     <h3>Heading</h3>
-                                     <p className="text-secondary cardText" >Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id. </p><a href="#" className="h4"><i className="fa fa-arrow-circle-right"></i></a></div>
-
+                                {highItems}
                  </div>
              </div>
          </div>
@@ -152,6 +201,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // this.props.onIncrementCounter
+    sendProductIdForWholePage : (value) => dispatch({type: "PRODUCTID",productid: value}),
    sendSearchValue : (value) => dispatch({type: "SEARCHVALUE", searchValue: value})
 
   }

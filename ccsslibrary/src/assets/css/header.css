@@ -7,10 +7,12 @@
 }
 #dropdown{
 margin-top: 8px;
-
+}
+.usernameDiv{
+  /* margin-left: 4rem !important; */
 }
 #navbarResponsive{
-margin-right: -14rem !important;
+margin-right: -46px !important;
 }
 .userDropdown{
 border-radius: 6% !important;
@@ -21,19 +23,13 @@ margin-top: -25px !important;
 
 }
 .cartImg{
- margin-left: 14rem !important;
+ margin-left: 13.5rem !important;
  margin-top: -4.1rem !important;
  transform: scale(1.3);
-
-
 }
-
 .headercontainer{
   height: 50px !important;
 }
 .number{
   margin-left: 70px !important;
-}
-.greetingDiv{
-  margin-right: 3rem !important;
 }
