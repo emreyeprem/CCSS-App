@@ -9,7 +9,7 @@
 <img src="postgres.png" height="100px" width="150px">
 
 ## Introduction video of the project: 
- [![Watch the video](https://i.imgur.com/vKb2F1B.png)](<iframe width="560" height="315" src="https://www.youtube.com/embed/qeu4gulhc1s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>)
+[![Watch the video](https://img.youtube.com/vi/T-D1KVIuvjA/maxresdefault.jpg)](<iframe width="560" height="315" src="https://www.youtube.com/embed/qeu4gulhc1s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>)
 
 * **Purpose of the app:** 
   Utilized various client-side, server-side frameworks and SQL by emphasizing database optimization including React,
